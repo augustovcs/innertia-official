@@ -2,7 +2,7 @@
 
 Defined the packages and libraries for project usage below,
 Keep just the "using" as already injected for better memory economy and usage.
-For first time looking the project, keep maintain this arc model for controllers.
+For first time looking the project, keep maintain this arc model for Services.
 
 */
 
@@ -13,7 +13,7 @@ using Auth.Models;
 
 namespace Auth.Services;
 
-public class AuthTestingService : IAuthTesting
+public class AuthTestingService : ITestingServices
 {
     private readonly Supabase.Client _supabaseClient;
 
@@ -26,7 +26,7 @@ public class AuthTestingService : IAuthTesting
     {
         var credentialsResponse = await _supabaseClient
         .From<AuthCredentials>()
-        .Limit(10000)
+        .Limit(100) // Adjust the limit as you need, this is for testing purposes
         .Get();
 
         Console.WriteLine($"Total found: {credentialsResponse.Models.Count}");
@@ -38,6 +38,39 @@ public class AuthTestingService : IAuthTesting
             Email = c.Email_Id,
             Password = c.Password_Id
         }).ToList();
+
+    }
+
+    public async Task<bool> RegisterUserTesting(RegisterUserDTO credentials)
+    {
+
+        var credentialPost = await _supabaseClient
+        .From<AuthCredentials>()
+        .Where(x => x.Email_Id == credentials.Email && x.Password_Id == credentials.Password)
+        .Get();
+
+        if (credentialPost.Model != null)
+        {
+            return false;
+        }
+
+        var newUser = new AuthCredentials
+        {
+            Email_Id = credentials.Email,
+            Password_Id = credentials.Password,
+            Is_Admin  = false
+            
+        };
+
+        var response = await _supabaseClient
+        .From<AuthCredentials>()
+        .Insert(newUser);
+
+        return response.Models != null && response.Models.Any();
+
+
+
+        
         
     }
 
