@@ -58,8 +58,8 @@ public class AuthTestingService : ITestingServices
         {
             Email_Id = credentials.Email,
             Password_Id = credentials.Password,
-            Is_Admin  = false
-            
+            Is_Admin = false
+
         };
 
         var response = await _supabaseClient
@@ -68,10 +68,34 @@ public class AuthTestingService : ITestingServices
 
         return response.Models != null && response.Models.Any();
 
-
-
-        
-        
     }
+
+
+    public async Task<bool> LoginUserTesting(RegisterUserDTO credentials)
+        {
+
+            var credentialPost = await _supabaseClient
+            .From<AuthCredentials>()
+            .Where(c => c.Email_Id == credentials.Email)
+            .Get();
+
+            if (credentialPost == null || !credentialPost.Models.Any())
+            {
+                return false;
+            }
+
+            var user = credentialPost.Models.First();
+            
+
+            bool verifyHashed = BCrypt.Net.BCrypt.EnhancedVerify(credentials.Password, user.Password_Id);
+
+            Console.WriteLine($"Password (hash): {user.Password_Id}");
+            Console.WriteLine($"Password (crude): {credentials.Password}");
+
+            return verifyHashed;
+            
+
+
+        }
 
 }
