@@ -32,6 +32,7 @@ builder.Services.AddControllers();
 
 
 builder.Services.AddScoped<ITestingServices, AuthTestingService>();
+builder.Services.AddScoped<IRegisterService, RegisterService>();
 
 var app = builder.Build();
 
