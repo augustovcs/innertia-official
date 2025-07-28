@@ -18,4 +18,6 @@ public interface ITestingServices
 
     Task<bool> RegisterUserTesting(RegisterUserDTO credentials);
 
+    Task<bool> LoginUserTesting(RegisterUserDTO credentials);
+
 }

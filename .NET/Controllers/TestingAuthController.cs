@@ -8,6 +8,7 @@ For first time looking the project, keep maintain this arc model for controllers
 
 using Auth.DTO;
 using Auth.Interfaces;
+using BCrypt.Net;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -32,10 +33,10 @@ public class SignUpUserController : ControllerBase
     [HttpGet("get-all-users-created")]
     public async Task<IActionResult> GetAllUsersCreated()
     {
-        
+
         var user_credentials = await _authTesting.GetAllUserCredentials();
         return Ok(user_credentials);
-        
+
     }
 
     //This is a testing endpoint to register a user
@@ -59,6 +60,29 @@ public class SignUpUserController : ControllerBase
             user.Email,
             user.Password
         });
+    }
+
+    [HttpPost("test-login")]
+    public async Task<IActionResult> TestingLogin([FromBody] RegisterUserDTO user)
+    {
+        var user_login = await _authTesting.LoginUserTesting(user);
+
+        if (!user_login)
+        {
+            return BadRequest("User doesn't exist or login failed.");
+        }
+        
+        Console.WriteLine($"User logged: {user_login}");
+
+        string hashedPassword = BCrypt.Net.BCrypt.EnhancedHashPassword(user.Password, 14);
+
+        return Ok(new
+        {
+            message = "User logged successfully",
+            user.Email,
+            hashedPassword
+        });
+
     }
 
 }
