@@ -19,5 +19,7 @@ public class RegisterUserDTO
     public string Email { get; set; }
     [JsonPropertyName("password_hash")]
     public string Password { get; set; }
+
+    // Constructor //
     
 }
