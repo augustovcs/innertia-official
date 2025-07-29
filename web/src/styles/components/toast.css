@@ -1,0 +1,25 @@
+@layer components {
+  :root {
+    --toast-bg: #ffffff;
+    --toast-gradient-to: #ffffff;
+    --toast-border: var(--border, #e4e4e7);
+    --toast-icon-bg-success: rgba(34, 197, 94, 0.1);
+    --toast-icon-bg-warning: rgba(245, 158, 11, 0.1);
+    --toast-icon-bg-error: rgba(239, 68, 68, 0.1);
+    --toast-title: #27272a;
+    --toast-description: #71717a;
+    --toast-close-icon: #a1a1aa;
+  }
+
+  .dark {
+    --toast-bg: #1a1a1a;
+    --toast-gradient-to: #121212;
+    --toast-border: var(--border, #333333);
+    --toast-icon-bg-success: rgba(34, 197, 94, 0.1);
+    --toast-icon-bg-warning: rgba(245, 158, 11, 0.1);
+    --toast-icon-bg-error: rgba(239, 68, 68, 0.1);
+    --toast-title: #f9f9f9;
+    --toast-description: #a0a0a0;
+    --toast-close-icon: #888888;
+  }
+}

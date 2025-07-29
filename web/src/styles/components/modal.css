@@ -1,0 +1,23 @@
+@layer components {
+  :root {
+    --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+    --modal-bg: #fafafa;
+    --modal-border: var(--border, #e4e4e7);
+    --modal-header-bg: rgba(255, 255, 255, 0.4);
+    --modal-title: rgba(39, 39, 42, 0.95);
+    --modal-description: #71717a;
+    --modal-close-icon: #6b7280;
+    --modal-close-icon-hover: #374151;
+  }
+
+  .dark {
+    --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+    --modal-bg: #1a1a1a;
+    --modal-border: var(--border, #333333);
+    --modal-header-bg: rgba(26, 26, 26, 0.4);
+    --modal-title: rgba(249, 249, 249, 0.95);
+    --modal-description: #a1a1a9;
+    --modal-close-icon: #a1a1aa;
+    --modal-close-icon-hover: #e4e4e7;
+  }
+}

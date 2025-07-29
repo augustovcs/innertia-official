@@ -1,0 +1,17 @@
+@layer components {
+  :root {
+    --input-bg: var(--input, #f4f4f5);
+    --input-border: var(--border, #e4e4e7);
+    --input-focus: var(--ring, #3b82f6);
+    --input-placeholder: #9ca3af;
+    --input-text: var(--foreground, #1e293b);
+  }
+
+  .dark {
+    --input-bg: var(--input, #29292b);
+    --input-border: var(--border, #29292b);
+    --input-focus: var(--ring, #29292b);
+    --input-placeholder: #71717a;
+    --input-text: var(--foreground, #f9f9f9);
+  }
+}

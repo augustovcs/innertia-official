@@ -1,0 +1,17 @@
+{
+  "tailwindCSS.experimental.configFile": "src/styles/main.css",
+  "css.validate": false,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.inlineSuggest.enabled": true,
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.includeLanguages": {
+    "vue": "html",
+    "javascript": "javascript",
+    "typescript": "typescript"
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}

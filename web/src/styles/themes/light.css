@@ -1,0 +1,55 @@
+@layer theme {
+  :root {
+    /* Core Colors */
+    --border: #e4e4e7;
+    --input: #f4f4f5;
+    --ring: #3b82f6;
+    --focus-ring: #60a5fa;
+    --skeleton: #d4d4d4;
+    --background: #ffffff;
+    --foreground: #1e293b;
+
+    /* Base Theme */
+    --primary: #3b82f6;
+    --primary-foreground: #ffffff;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #1e293b;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --muted: #f9fafb;
+    --muted-foreground: #6b7280;
+    --accent: #e0f2fe;
+    --accent-foreground: #1e40af;
+
+    /* Elements */
+    --popover: #ffffff;
+    --popover-foreground: #1e293b;
+    --card: #ffffff;
+    --card-foreground: #1e293b;
+
+    /* Sidebar */
+    --sidebar-background: #f8fafc;
+    --sidebar-foreground: #1e293b;
+    --sidebar-primary: #3b82f6;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #dbeafe;
+    --sidebar-accent-foreground: #1e3a8a;
+    --sidebar-border: #e2e8f0;
+    --sidebar-ring: #93c5fd;
+
+    /* Appearance Variations */
+    --darkbg: #e5e7eb;
+    --darkcard: #f9fafb;
+    --darkaccent: #bfdbfe;
+    --darkborder: #e4e4e7;
+    --lighttext: #1e293b;
+    --mediumtext: #475569;
+
+    /* Typography */
+    --text-heading: var(--foreground);
+    --text-body: var(--mediumtext);
+    --text-muted: var(--muted-foreground);
+    --text-subtle: #9ca3af;
+    --label-text: var(--mediumtext);
+  }
+}

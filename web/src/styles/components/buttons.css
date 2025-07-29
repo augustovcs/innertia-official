@@ -1,0 +1,15 @@
+@layer components {
+  :root {
+    --btn-default-bg: var(--primary, #3b82f6);
+    --btn-default-hover: #2563eb;
+    --btn-default-active: #1d4ed8;
+    --btn-default-text: var(--primary-foreground, #ffffff);
+  }
+
+  .dark {
+    --btn-default-bg: var(--primary, #d4d4d8);
+    --btn-default-hover: #b4b4b8;
+    --btn-default-active: #a0a0a6;
+    --btn-default-text: var(--primary-foreground, #1a1a1a);
+  }
+}
