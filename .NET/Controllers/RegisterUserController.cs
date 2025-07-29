@@ -45,7 +45,7 @@ public class RegisterUserController : ControllerBase
         {
             message = "User registered successfully",
             user.Email,
-            user.Password //remover em breve, para evitar endpoint soltando senha crua
+            // user.Password // LOG TEST removed for security reasons, not for production use for evicting leaks
         });
     }
 

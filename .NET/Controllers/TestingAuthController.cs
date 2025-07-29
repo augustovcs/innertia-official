@@ -80,7 +80,7 @@ public class SignUpUserController : ControllerBase
         {
             message = "User logged successfully",
             user.Email,
-            hashedPassword
+            // hashedPassword // LOG TEST - just for testing, not for production use for evicting leaks 
         });
 
     }
