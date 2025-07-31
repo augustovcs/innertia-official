@@ -6,18 +6,16 @@ For first time looking the project, keep maintain this arc model for DTOs .
 
 */
 
-
 using System.Text.Json.Serialization;
-
 
 namespace Auth.DTO;
 
-public class RegisterUserDTO
+public class TaskAgendaDTO
 {
-
-    [JsonPropertyName("email")]
+    public int Id { get; set; }
     public string Email { get; set; } = null!;
-    [JsonPropertyName("password_hash")]
-    public string Password { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string Description { get; set; } = null!;
+
     
 }

@@ -39,6 +39,18 @@ public class RegisterUserController : ControllerBase
             return BadRequest("User already exists or registration failed.");
         }
 
+        if (user.Email == string.Empty || user.Password == string.Empty)
+        {
+            
+            return BadRequest("Email and Password cannot be empty.");
+            
+        }
+
+        if (user_register == false)
+        {
+            return BadRequest("User registration failed.");
+        }
+
         // Registration successful
         Console.WriteLine($"User registered: {user_register}");
         return Ok(new

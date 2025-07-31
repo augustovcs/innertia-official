@@ -14,6 +14,6 @@ namespace Auth.Interfaces;
 public interface IRegisterService
 {
 
-    Task<bool> RegisterUser (RegisterUserDTO credentials);
+    Task<bool> RegisterUser(RegisterUserDTO credentials);
 
 }
