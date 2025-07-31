@@ -15,9 +15,9 @@ public class AuthLoginDTO
 {
 
     [JsonPropertyName("email")]
-    public string Email { get; set; }
+    public string Email { get; set; } = null!;
     [JsonPropertyName("password_hash")]
-    public string Password { get; set; }
+    public string Password { get; set; } = null!;
 
 
 }

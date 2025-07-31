@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<Supabase.Client>(_ =>
 new Supabase.Client(
-    builder.Configuration["SupabaseUrl"],
+    builder.Configuration["SupabaseUrl"] ?? throw new ArgumentNullException("SupabaseUrl is not configured"),
     builder.Configuration["SupabaseKey"],
     new SupabaseOptions
     {
