@@ -10,5 +10,12 @@ export default createRouter({
         layout: 'default',
       },
     },
+    {
+      path: '/signup',
+      component: () => import('@/views/SignUp.vue'),
+      meta: {
+        layout: 'default',
+      },
+    },
   ],
 });
