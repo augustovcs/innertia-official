@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import LogoIcon from '@/components/LogoIcon.vue';
 import Button from '@/components/ui/Button.vue';
-import Checkbox from '@/components/ui/Checkbox.vue';
 import Input from '@/components/ui/Input.vue';
 import Label from '@/components/ui/Label.vue';
 import { Eye, EyeClosed } from 'lucide-vue-next';
@@ -9,62 +8,28 @@ import { reactive, ref } from 'vue';
 
 import { z } from 'zod';
 
-const FormSchema = z
-  .object({
-    fullname: z
-      .string('Insira o seu nome')
-      .refine(
-        val => val.trim().split(' ').length >= 2,
-        'Insira o nome completo',
-      ),
-    email: z.email('Insira um email válido'),
-    password: z
-      .string('Campo obrigatório')
-      .min(6, 'A senha deve conter pelo menos 6 caracteres'),
-    confirmPassword: z.string('As senhas não coincidem'),
-  })
-  .superRefine(({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'As senhas não coincidem',
-        path: ['confirmPassword'],
-      });
-    }
-  });
+const FormSchema = z.object({
+  email: z.email('Insira um email válido'),
+  password: z
+    .string('Campo obrigatório')
+    .min(6, 'A senha deve conter pelo menos 6 caracteres'),
+});
 
 type Form = z.infer<typeof FormSchema>;
 
 const formSchema = FormSchema.shape;
 const showPassword = ref<boolean>(false);
-const showPasswordConfirmation = ref<boolean>(false);
-const termsAccepted = ref<boolean>(false);
 
 const formData = reactive<Record<keyof Form, string | undefined>>({
-  fullname: undefined,
   email: undefined,
   password: undefined,
-  confirmPassword: undefined,
 });
 const formErrors = reactive<Record<keyof Form, string | undefined>>({
-  fullname: undefined,
   email: undefined,
   password: undefined,
-  confirmPassword: undefined,
 });
 
 const validateFormField = (fieldName: keyof Form) => {
-  if (fieldName === 'confirmPassword') {
-    const match = formData['password'] === formData['confirmPassword'];
-
-    formErrors['password'] = match ? undefined : 'As senhas não coincidem';
-    formErrors['confirmPassword'] = match
-      ? undefined
-      : 'As senhas não coincidem';
-
-    return;
-  }
-
   const field = formSchema[fieldName];
   const parsed = field.safeParse(formData[fieldName]);
 
@@ -76,10 +41,6 @@ const validateFormField = (fieldName: keyof Form) => {
 };
 
 const validateFormData = (): z.infer<typeof FormSchema> | undefined => {
-  if (!termsAccepted) {
-    return;
-  }
-
   const result = FormSchema.safeParse(formData);
 
   Object.keys(formErrors).forEach(key => {
@@ -98,18 +59,26 @@ const validateFormData = (): z.infer<typeof FormSchema> | undefined => {
 
 const submit = () => {
   const data = validateFormData();
-  console.log(termsAccepted.value);
   if (data) console.log(data);
 };
 
 const imgUrl =
-  'https://plus.unsplash.com/premium_photo-1668383207188-f5474588d674?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+  'https://images.unsplash.com/photo-1612202303082-b1161ab02548?q=80&w=736&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 </script>
 
 <template>
   <div
-    class="flex flex-col-reverse justify-between items-center lg:flex-row xl:gap-0 w-full max-h-screen min-h-screen lg:p-4 xl:p-6"
+    class="flex flex-col justify-between items-center lg:flex-row xl:gap-0 w-full max-h-screen min-h-screen lg:p-4 xl:p-6"
   >
+    <div
+      class="max-h-screen w-screen lg:w-[50vw] bg-fg lg:bg-transparent overflow-hidden"
+    >
+      <img
+        class="h-[30vh] md:h-[40vh] lg:h-[95vh] w-full object-cover opacity-50 lg:opacity-100 lg:rounded-2xl"
+        :src="imgUrl"
+        alt="productivity ilustrate"
+      />
+    </div>
     <div
       class="flex-1 lg:flex-1/2 xl:max-h-screen xl:min-h-screen flex flex-col justify-evenly xl:justify-normal xl:gap-y-8 rounded-t-2xl lg:px-12 xl:px-24 xl:pt-8 2xl:py-40"
     >
@@ -120,13 +89,8 @@ const imgUrl =
         <h1
           class="font-montserrat font-semibold text-bg/95 lg:text-fg text-2xl xs:text-5xl 2xl:mt-12"
         >
-          Vamos lá
+          Bem-vindo(a) de volta!
         </h1>
-        <p
-          class="font-ibm-plex-sans font-normal text-bg/95 lg:text-primary text-sm"
-        >
-          Faça o registro e dê o proximo passo
-        </p>
       </div>
 
       <Button
@@ -147,18 +111,6 @@ const imgUrl =
       <div class="w-[90vw] lg:w-full">
         <!-- Form -->
         <form @submit.prevent="submit" class="flex flex-col gap-4">
-          <div>
-            <Label class="hidden xs:block" text="Fullname" for="fullname" />
-            <Input
-              v-model="formData['fullname']"
-              id="fullname"
-              size="lg"
-              placeholder="Digite seu nome completo"
-              class="w-full"
-              @blur="validateFormField('fullname')"
-              :error="formErrors['fullname']"
-            />
-          </div>
           <div>
             <Label class="hidden xs:block" text="Email" for="email" />
             <Input
@@ -194,61 +146,14 @@ const imgUrl =
                 </span>
               </Input>
             </div>
-            <div class="flex-1">
-              <Label
-                class="hidden xs:block"
-                text="Confirmar senha"
-                for="confirmPassword"
-              />
-              <Input
-                v-model="formData['confirmPassword']"
-                id="confirmPassword"
-                size="lg"
-                :type="showPasswordConfirmation ? 'text' : 'password'"
-                placeholder="Confirme sua senha"
-                class="w-full"
-                icon-position="right"
-                @blur="validateFormField('confirmPassword')"
-                :error="formErrors['confirmPassword']"
-              >
-                <span
-                  class="cursor-pointer"
-                  @click="
-                    () => (showPasswordConfirmation = !showPasswordConfirmation)
-                  "
-                >
-                  <Eye class="size-5" v-if="showPasswordConfirmation" />
-                  <EyeClosed class="size-5" v-else />
-                </span>
-              </Input>
-            </div>
           </div>
-          <Checkbox v-model="termsAccepted" name="termPolicy" value="accept">
-            <label class="text-sm xl:text-base">
-              Concordo com os
-              <a href="#" class="text-link hover:underline"
-                >Termos de Política e Privacidade</a
-              >
-            </label>
-          </Checkbox>
-          <Button type="submit" size="lg" class="w-full h-12"
-            >Registrar conta</Button
-          >
+          <Button type="submit" size="lg" class="w-full h-12">Entrar</Button>
         </form>
         <p class="mt-2 font-ibm-plex-sans text-sm xl:text-base">
-          Já tem uma conta?
-          <a href="/login" class="text-link hover:underline">Fazer o login</a>
+          Não tem uma conta?
+          <a href="/signup" class="text-link hover:underline">Registre-se</a>
         </p>
       </div>
-    </div>
-    <div
-      class="max-h-screen w-screen lg:w-[50vw] bg-fg lg:bg-transparent overflow-hidden"
-    >
-      <img
-        class="h-[30vh] md:h-[40vh] lg:h-[95vh] w-full object-cover opacity-50 lg:opacity-100 lg:rounded-2xl"
-        :src="imgUrl"
-        alt="productivity ilustrate"
-      />
     </div>
   </div>
 </template>
