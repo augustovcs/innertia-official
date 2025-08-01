@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { AlertCircle, Mail, Search, User } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
-import { z } from 'zod';
 
 import { useToast } from '@/composables/useToast';
 import { useModalStore } from '@/stores/modal';
 
-import Form, { type Field } from '@/components/Form.vue';
 import Button from '@/components/ui/Button.vue';
 import Input from '@/components/ui/Input.vue';
 import Modal from '@/components/ui/modal/Modal.vue';
@@ -22,26 +20,6 @@ const toast = useToast();
 // UI State
 const loading = ref(true);
 const loadTime = 5000;
-
-// Form Schema & Fields
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-});
-
-const fields: Field[] = [
-  { name: 'email', label: 'E-mail', type: 'email' },
-  { name: 'password', label: 'Password', type: 'password' },
-];
-
-function handleSubmit(data: z.ZodRawShape) {
-  const parsed = schema.safeParse(data);
-  if (!parsed.success) {
-    console.error('Form error:', parsed.error);
-    return;
-  }
-  console.log('Form data:', parsed.data);
-}
 
 // Modal
 const openModal = () => modalStore.open('modal');
@@ -72,29 +50,31 @@ onMounted(() => {
     <!-- Buttons -->
     <section class="flex flex-col gap-2 w-fit">
       <h1>Buttons:</h1>
-      <Button variant="primary" size="lg">Primary Big</Button>
-      <Button variant="secondary" size="md">Secondary Medium</Button>
-      <Button variant="outline" size="sm">Outline Small</Button>
-    </section>
-
-    <!-- Form -->
-    <section>
-      <h1>Form:</h1>
-      <Form :fields="fields" :schema="schema" :onSubmit="handleSubmit" />
+      <Button size="lg">Button 1</Button>
+      <Button size="md">Button 2</Button>
+      <Button size="sm">Button 3</Button>
     </section>
 
     <!-- Inputs -->
     <section class="flex flex-col gap-2 w-fit">
       <h1>Inputs:</h1>
-      <Input label="Email" :icon="Mail" size="lg" />
-      <Input label="Username" :icon="User" size="md" />
-      <Input label="Search" :icon="Search" size="sm" />
+      <Input label="Email" size="lg">
+        <Mail />
+      </Input>
+      <Input label="Username" :icon="User" size="md">
+        <User />
+      </Input>
+      <Input label="Search" :icon="Search" size="sm">
+        <Search />
+      </Input>
       <Input
         label="Mail"
         :icon="AlertCircle"
         size="sm"
         error="You did not fill this correctly"
-      />
+      >
+        <AlertCircle />
+      </Input>
     </section>
 
     <!-- Modal -->
@@ -116,7 +96,7 @@ onMounted(() => {
         @click="successToast"
         variant="outline"
         size="lg"
-        color="bg-emerald-400/20 text-emerald-400 border-emerald-400"
+        class="bg-emerald-400/20 text-emerald-400 border-emerald-400"
         hover-color="hover:bg-emerald-50/10"
       >
         Success
@@ -125,7 +105,7 @@ onMounted(() => {
         @click="warningToast"
         variant="outline"
         size="lg"
-        color="bg-amber-400/20 text-amber-400 border-amber-400"
+        class="bg-amber-400/20 text-amber-400 border-amber-400"
         hover-color="hover:bg-amber-50/10"
       >
         Warning
@@ -134,7 +114,7 @@ onMounted(() => {
         @click="errorToast"
         variant="outline"
         size="lg"
-        color="bg-red-400/20 text-red-400 border-red-400"
+        class="bg-red-400/20 text-red-400 border-red-400"
         hover-color="hover:bg-red-50/10"
       >
         Error
@@ -156,12 +136,12 @@ onMounted(() => {
           </template>
           <template v-else>
             <div
-              class="rounded-lg bg-zinc-400 w-full h-56 flex justify-center items-center"
+              class="rounded-lg bg-zinc-300 w-full h-56 flex justify-center items-center"
             >
               <h1>Fake content</h1>
             </div>
             <div
-              class="rounded-lg bg-zinc-400 w-full h-12 flex justify-center items-center"
+              class="rounded-lg bg-zinc-300 w-full h-12 flex justify-center items-center"
             >
               <p>Fake description</p>
             </div>

@@ -15,7 +15,7 @@ const { toggleTheme } = useTheme();
   <Toggle v-model="isToggled" @change="toggleTheme">
     <component
       :is="isToggled ? Sun : Moon"
-      :class="isToggled ? 'text-amber-500' : 'text-zinc-500'"
+      :class="isToggled ? 'text-zinc-500' : 'text-zinc-500'"
     />
   </Toggle>
 </template>

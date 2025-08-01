@@ -27,7 +27,7 @@ const className = computed(() => attrs.class as string | undefined);
       )
     "
   >
-    <span class="text-sm font-medium text-label-text">
+    <span class="text-base font-ibm-plex-sans font-medium text-gray-800">
       {{ text }}
       <span v-if="required" class="text-red-500 ml-0.5">*</span>
     </span>
