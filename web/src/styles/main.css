@@ -11,6 +11,8 @@
 @source "./src/**/*.{html,js,vue,ts,jsx,tsx}";
 
 @theme inline {
+  --breakpoint-xs: 22rem;
+
   --color-primary: var(--primary);
   --color-primary-fg: var(--primary-fg);
 
