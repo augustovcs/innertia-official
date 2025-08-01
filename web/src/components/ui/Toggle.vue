@@ -21,13 +21,12 @@ const emit = defineEmits<{
 const isIconMode = computed(() => !!props.iconOn && !!props.iconOff);
 
 const toggleClasses = computed(() => [
-  'relative inline-flex items-center h-6 w-11 rounded-full transition-colors duration-200 ease-in-out',
-  props.modelValue ? 'bg-primary' : 'bg-foreground/30',
+  'relative inline-flex items-center h-6 w-11 rounded-full transition-colors duration-200 ease-in-out bg-neutral',
   props.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
 ]);
 
 const sliderClasses = computed(() => [
-  'absolute left-1 h-4 w-4 rounded-full bg-background transition-transform duration-200 ease-in-out',
+  'absolute left-1 h-4 w-4 rounded-full bg-bg transition-transform duration-200 ease-in-out',
   props.modelValue ? 'translate-x-5' : 'translate-x-0',
 ]);
 

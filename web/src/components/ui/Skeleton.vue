@@ -8,5 +8,7 @@ const className = computed(() => attrs.class as string | undefined);
 </script>
 
 <template>
-  <div :class="twMerge('animate-pulse rounded-lg bg-skeleton', className)" />
+  <div
+    :class="twMerge('animate-pulse rounded-lg bg-neutral-fg/30', className)"
+  />
 </template>

@@ -22,14 +22,14 @@ const close = () => {
   <Teleport to="body">
     <div
       v-if="isOpen"
-      class="fixed inset-0 bg-modal-overlay-bg flex items-center justify-center"
+      class="fixed inset-0 bg-overlay flex items-center justify-center"
     >
       <div
-        class="bg-modal-bg m-2 rounded-lg shadow-lg relative min-w-[32rem] max-w-[64rem] min-h-[28rem] overflow-hidden"
+        class="bg-bg m-2 rounded-lg shadow-lg relative min-w-[32rem] max-w-[64rem] min-h-[28rem] overflow-hidden"
       >
         <button
           @click="close"
-          class="cursor-pointer absolute top-4 right-4 text-modal-close-icon hover:text-modal-close-icon-hover"
+          class="cursor-pointer absolute top-4 right-4 text-card-fg hover:text-card-fg/80"
         >
           <X />
         </button>
