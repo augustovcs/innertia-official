@@ -58,7 +58,9 @@ public class RegisterService : IRegisterService
 
         if (credentialPost != null)
         {
-            return false; //se der diferente de nulo, significa que o email existe, retorno false e acaba!
+            throw new ValidationException("Email already exists!"); //se der diferente de nulo, significa que o email existe, retorno false e acaba!
+
+            //throw ou return, colocar o que fizer sentido ai (?)
         }
 
 
