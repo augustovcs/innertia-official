@@ -32,19 +32,39 @@ public class EditService : IEditService
 
    public async Task<bool> EditUser(AuthLoginDTO credentials)
 {
+    
+    //validates if credentials are 0 or negative
     if (credentials.Id <= 0)
-        throw new ValidationException("User ID cannot be 0 or negative.");
+            throw new ValidationException("User ID cannot be 0 or negative.");
 
     var credentialPost = await _supabaseClient
         .From<AuthCredentials>()
         .Where(x => x.User_ID == credentials.Id)
         .Single();
 
+    
+    //validates if this id exists in the database
+    
     if (credentialPost == null)
-        throw new ValidationException("User not found.");
+            throw new ValidationException("User not found.");
 
-    bool isEmailValid = !string.IsNullOrWhiteSpace(credentials.Email) && credentials.Email != "string";
-    bool isPasswordValid = !string.IsNullOrWhiteSpace(credentials.Password) && credentials.Password != "string";
+    
+    /*
+    Here we check if the email and password are valid.
+    To be valid, they must follow these rules:
+    - Email must not be null, empty, or equal to "string".
+    - Password must not be null, empty, or equal to "string".
+    If both are invalid, we throw a ValidationException.
+
+    If either is valid, we update the corresponding field in the credentialPost object.
+
+    The update for password doesn't generate another hash if the password is not changed.
+
+    Finally if the password is equals the existing one hashed in database, we don't update it to maintain the original hash.
+    */
+
+    bool isEmailValid = !string.IsNullOrWhiteSpace(credentials.Email) && credentials.Email != "string" && credentials.Email != credentialPost.Email_Id; 
+    bool isPasswordValid = !string.IsNullOrWhiteSpace(credentials.Password) && credentials.Password != "string" && !BCrypt.Net.BCrypt.Verify(credentials.Password, credentialPost.Password_Id);
 
     if (!isEmailValid && !isPasswordValid)
         throw new ValidationException("Neither email nor password will be changed. Nothing was updated.");
@@ -55,14 +75,25 @@ public class EditService : IEditService
     if (isPasswordValid)
         credentialPost.Password_Id = BCrypt.Net.BCrypt.HashPassword(credentials.Password);
 
+    // Update the Last_Update field to the current UTC time
+    // This is important to keep track of when the user was last edited.
+    //Probably this will be used for auditing purposes in the future.
+
     credentialPost.Last_Update = DateTime.UtcNow;
 
     var response = await _supabaseClient
         .From<AuthCredentials>()
         .Update(credentialPost);
 
+
+    // This never occured in my entire life, but just in case
+    // we check if the response is null or empty.
+    // If it is, we throw a ValidationException with a message indicating that the user update failed.
+    // This is important to avoid null reference exceptions in the future.
+    
+
     if (response.Models == null || !response.Models.Any())
-        throw new ValidationException("User update failed.");
+            throw new ValidationException("User update failed.");
 
     return response.Models != null && response.Models.Any();
 }
