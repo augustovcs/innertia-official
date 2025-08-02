@@ -29,6 +29,10 @@ public class RegisterService : IRegisterService
         _supabaseClient = supabaseClient;
     }
 
+    /* 
+    
+    TESTE PARA INTERFACES - NÃO UTILIZAR, POIS NÃO É O MÉTODO DE REGISTRO REAL
+
     public async Task<bool> TestingRegUser(RegisterUserDTO credentials)
     {
         var post = await _supabaseClient
@@ -44,13 +48,15 @@ public class RegisterService : IRegisterService
 
 
     }
+    
+    */
 
 
     public async Task<bool> RegisterUser(RegisterUserDTO credentials)
     {
-        
-         
-        
+
+
+
         var credentialPost = await _supabaseClient
         .From<AuthCredentials>()
         .Where(x => x.Email_Id == credentials.Email)
@@ -58,7 +64,9 @@ public class RegisterService : IRegisterService
 
         if (credentialPost != null)
         {
-            return false; //se der diferente de nulo, significa que o email existe, retorno false e acaba!
+            throw new ValidationException("Email already exists!"); //se der diferente de nulo, significa que o email existe, retorno false e acaba!
+
+            //throw ou return, colocar o que fizer sentido ai (?)
         }
 
 
@@ -75,7 +83,8 @@ public class RegisterService : IRegisterService
             Is_Admin = false
         };
 
-        if (string.IsNullOrEmpty(newUser.Email_Id)) {
+        if (string.IsNullOrEmpty(newUser.Email_Id))
+        {
             throw new ValidationException("Email cannot be empty.");
         }
 
