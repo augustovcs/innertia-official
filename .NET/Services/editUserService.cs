@@ -53,7 +53,9 @@ public class EditService : IEditService
     Here we check if the email and password are valid.
     To be valid, they must follow these rules:
     - Email must not be null, empty, or equal to "string".
-    - Password must not be null, empty, or equal to "string".
+    - Password must not be null, empty, equal to "string" or equal the already using (we are doing a hash verify for this one, 
+    if the hash = crude password, then don't need change the hash again).
+
     If both are invalid, we throw a ValidationException.
 
     If either is valid, we update the corresponding field in the credentialPost object.
