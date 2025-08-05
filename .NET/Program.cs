@@ -34,6 +34,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ITestingServices, AuthTestingService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<IEditService, EditService>();
+builder.Services.AddScoped<IAuthService, LoginUserService>();
 
 // Add CORS policy
 
