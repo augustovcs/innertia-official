@@ -4,56 +4,37 @@ import Button from '@/components/ui/Button.vue';
 import Checkbox from '@/components/ui/Checkbox.vue';
 import Input from '@/components/ui/Input.vue';
 import Label from '@/components/ui/Label.vue';
-import { Eye, EyeClosed } from 'lucide-vue-next';
+import Toaster from '@/components/ui/Toaster.vue';
+import { useToast } from '@/composables/useToast';
+import { signUp, signUpSchema, type TSignUpSchema } from '@/services/auth/signUp';
+import { AxiosError, HttpStatusCode } from 'axios';
+import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next';
 import { reactive, ref } from 'vue';
 
-import { z } from 'zod';
+const toast = useToast();
 
-const FormSchema = z
-  .object({
-    fullname: z
-      .string('Insira o seu nome')
-      .refine(
-        val => val.trim().split(' ').length >= 2,
-        'Insira o nome completo',
-      ),
-    email: z.email('Insira um email válido'),
-    password: z
-      .string('Campo obrigatório')
-      .min(6, 'A senha deve conter pelo menos 6 caracteres'),
-    confirmPassword: z.string('As senhas não coincidem'),
-  })
-  .superRefine(({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'As senhas não coincidem',
-        path: ['confirmPassword'],
-      });
-    }
-  });
+const formSchema = signUpSchema.shape;
 
-type Form = z.infer<typeof FormSchema>;
-
-const formSchema = FormSchema.shape;
+const loading = ref<boolean>(false);
 const showPassword = ref<boolean>(false);
 const showPasswordConfirmation = ref<boolean>(false);
-const termsAccepted = ref<boolean>(false);
 
-const formData = reactive<Record<keyof Form, string | undefined>>({
+const formData = reactive<Record<keyof TSignUpSchema, string | boolean | undefined>>({
   fullname: undefined,
   email: undefined,
   password: undefined,
   confirmPassword: undefined,
+	termsAccepted: false,
 });
-const formErrors = reactive<Record<keyof Form, string | undefined>>({
+const formErrors = reactive<Record<keyof TSignUpSchema, string | undefined>>({
   fullname: undefined,
   email: undefined,
   password: undefined,
   confirmPassword: undefined,
+	termsAccepted: undefined,
 });
 
-const validateFormField = (fieldName: keyof Form) => {
+const validateFormField = (fieldName: keyof TSignUpSchema) => {
   if (fieldName === 'confirmPassword') {
     const match = formData['password'] === formData['confirmPassword'];
 
@@ -75,31 +56,62 @@ const validateFormField = (fieldName: keyof Form) => {
   }
 };
 
-const validateFormData = (): z.infer<typeof FormSchema> | undefined => {
-  if (!termsAccepted) {
-    return;
-  }
-
-  const result = FormSchema.safeParse(formData);
+const validateFormData = (): TSignUpSchema | undefined => {
+  const { success, error, data } = signUpSchema.safeParse(formData);
 
   Object.keys(formErrors).forEach(key => {
-    formErrors[key as keyof Form] = undefined;
+    formErrors[key as keyof TSignUpSchema] = undefined;
   });
 
-  if (!result.success) {
-    for (const issue of result.error.issues) {
-      formErrors[issue.path[0] as keyof Form] = issue.message;
+  if (!success) {
+    for (const issue of error.issues) {
+      formErrors[issue.path[0] as keyof TSignUpSchema] = issue.message;
     }
     return;
   }
 
-  return result.data;
+  return data;
 };
 
-const submit = () => {
-  const data = validateFormData();
-  console.log(termsAccepted.value);
-  if (data) console.log(data);
+const submit = async () => {
+	loading.value = true;
+  const user = validateFormData();
+
+  if (!user) {
+		loading.value = false;
+    return;
+	}
+
+	const { email, password } = user;
+
+	try {
+		const { data } = await signUp({ email, password_hash: password });
+
+    loading.value = false;
+
+		// TODO: add session
+		console.log(data);
+		document.location.href = document.location.origin + '/dashboard';
+	} catch (err) {
+		loading.value = false;
+
+		if (err instanceof AxiosError) {
+			const { status } = err;
+
+      if (!status) {
+				toast.error('Ops! Alguma deu errado')
+				return;
+			};
+
+      const clientErrors = [HttpStatusCode.BadRequest, HttpStatusCode.NotFound]
+
+			if (clientErrors.includes(status)) {
+				toast.error('Email ou senha incorretos')
+				return;
+			}
+		}
+		toast.error('Ops! Alguma deu errado')
+	}
 };
 
 const imgUrl =
@@ -223,7 +235,7 @@ const imgUrl =
               </Input>
             </div>
           </div>
-          <Checkbox v-model="termsAccepted" name="termPolicy" value="accept">
+          <Checkbox v-model="formData['termsAccepted']" name="termPolicy" value="accept">
             <label class="text-sm xl:text-base">
               Concordo com os
               <a href="#" class="text-link hover:underline"
@@ -231,9 +243,11 @@ const imgUrl =
               >
             </label>
           </Checkbox>
-          <Button type="submit" size="lg" class="w-full h-12"
-            >Registrar conta</Button
-          >
+          <Button type="submit" size="lg" :disabled="loading" class="flex justify-center items-center w-full h-12 disabled:opacity-50">
+						<LoaderCircle v-if="loading" class="animate-spin"/>
+						<p v-else>Registrar conta</p>
+					</Button>
+					<Toaster />
         </form>
         <p class="mt-2 font-ibm-plex-sans text-sm xl:text-base">
           Já tem uma conta?

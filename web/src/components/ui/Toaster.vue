@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { useToasterStore } from '@/stores/toaster';
-import { CircleCheckBig, CircleX, TriangleAlert } from 'lucide-vue-next';
+import { useToasterStore, type ToastStatus } from '@/stores/toaster';
 import { twMerge } from 'tailwind-merge';
 
-const icons = {
-  error: CircleX,
-  warning: TriangleAlert,
-  success: CircleCheckBig,
-};
+const iconUrl = (status: ToastStatus) => {
+	return new URL(`../../assets/${status}.svg`, import.meta.url).href
+}
 
 const statusClasses = {
   error: ['text-error'],
@@ -31,9 +28,9 @@ const store = useToasterStore();
         tag="ul"
       >
         <li
-          v-for="toast in store.toasts"
-          :key="toast.id"
-          :class="['w-60 max-w-60 min-h-12', 'rounded-xl bg-bg']"
+          v-for="{ id, status, title } in store.toasts"
+          :key="id"
+          :class="['min-w-60 max-w-[30rem] min-h-12', 'rounded-xl bg-bg']"
         >
           <div
             :class="
@@ -42,15 +39,15 @@ const store = useToasterStore();
                 'w-full h-full',
                 'px-5 py-4 rounded-xl',
                 'bg-bg border-2 border-border/35 shadow-lg',
-                statusClasses[toast.status],
+                statusClasses[status],
               )
             "
           >
-            <component :is="icons[toast.status]" class="size-5" />
+            <img :src="iconUrl(status)" :alt="`toast icon ${status}`" class="size-5" />
             <h1
-              class="text-lg text-zinc-800 dark:text-zinc-100 font-ibm-plex-sans font-normal"
+              class="text-base text-zinc-800 dark:text-zinc-100 font-ibm-plex-sans font-normal"
             >
-              {{ toast.title }}
+              {{ title }}
             </h1>
           </div>
         </li>

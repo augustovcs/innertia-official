@@ -5,7 +5,6 @@ export type ToastStatus = 'success' | 'warning' | 'error';
 export interface Toast {
   id: string;
   title: string;
-  description: string;
   status: ToastStatus;
 }
 

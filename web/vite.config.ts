@@ -1,10 +1,17 @@
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
+	server: {
+		watch: {
+			usePolling: true,
+		},
+		host: true,
+	},
   plugins: [vue(), tailwindcss()],
   resolve: {
     alias: [
@@ -18,6 +25,10 @@ export default defineConfig({
           new URL('./src/components/$1/index.vue', import.meta.url),
         ),
       },
+			{
+				find: /@\/utils\/.*\.(ts|js)$/,
+				replacement: path.resolve(__dirname, 'src/utils'),
+			}
     ],
   },
 });

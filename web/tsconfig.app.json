@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-			"@/components/*": ["./src/components/*", "./src/components/*/index.vue"],
+			"@/components/*": ["src/components/*", "src/components/*/index.vue"],
+			"@/utils/*": ["src/utils/*.ts", "src/utils/*.js"],
       "@/*": ["src/*"],
     },
     "tsBuildInfoFile": "node_modules/.tmp/tsconfig.app.tsbuildinfo",
