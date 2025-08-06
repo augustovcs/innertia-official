@@ -8,5 +8,7 @@ services:
     
   web:
     build: ./web
+    volumes:
+      - ./web:/src
     ports:
       - 5173:5173
