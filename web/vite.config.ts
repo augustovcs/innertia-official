@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 
@@ -24,6 +25,10 @@ export default defineConfig({
           new URL('./src/components/$1/index.vue', import.meta.url),
         ),
       },
+			{
+				find: /@\/utils\/.*\.(ts|js)$/,
+				replacement: path.resolve(__dirname, 'src/utils'),
+			}
     ],
   },
 });

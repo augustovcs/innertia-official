@@ -3,33 +3,30 @@ import LogoIcon from '@/components/LogoIcon.vue';
 import Button from '@/components/ui/Button.vue';
 import Input from '@/components/ui/Input.vue';
 import Label from '@/components/ui/Label.vue';
-import { Eye, EyeClosed } from 'lucide-vue-next';
+import Toaster from '@/components/ui/Toaster.vue';
+import { useToast } from '@/composables/useToast';
+import { login, loginSchema, type TLoginSchema } from '@/services/auth/login';
+import { AxiosError, HttpStatusCode } from 'axios';
+import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next';
 import { reactive, ref } from 'vue';
 
-import { z } from 'zod';
+const toast = useToast();
 
-const FormSchema = z.object({
-  email: z.email('Insira um email válido'),
-  password: z
-    .string('Campo obrigatório')
-    .min(6, 'A senha deve conter pelo menos 6 caracteres'),
-});
+const formSchema = loginSchema.shape;
 
-type Form = z.infer<typeof FormSchema>;
-
-const formSchema = FormSchema.shape;
+const loading = ref<boolean>(false);
 const showPassword = ref<boolean>(false);
 
-const formData = reactive<Record<keyof Form, string | undefined>>({
+const formData = reactive<Record<keyof TLoginSchema, string | undefined>>({
   email: undefined,
   password: undefined,
 });
-const formErrors = reactive<Record<keyof Form, string | undefined>>({
+const formErrors = reactive<Record<keyof TLoginSchema, string | undefined>>({
   email: undefined,
   password: undefined,
 });
 
-const validateFormField = (fieldName: keyof Form) => {
+const validateFormField = (fieldName: keyof TLoginSchema) => {
   const field = formSchema[fieldName];
   const parsed = field.safeParse(formData[fieldName]);
 
@@ -40,26 +37,62 @@ const validateFormField = (fieldName: keyof Form) => {
   }
 };
 
-const validateFormData = (): z.infer<typeof FormSchema> | undefined => {
-  const result = FormSchema.safeParse(formData);
+const validateFormData = () => {
+  const {success, error, data} = loginSchema.safeParse(formData);
 
   Object.keys(formErrors).forEach(key => {
-    formErrors[key as keyof Form] = undefined;
+    formErrors[key as keyof TLoginSchema] = undefined;
   });
 
-  if (!result.success) {
-    for (const issue of result.error.issues) {
-      formErrors[issue.path[0] as keyof Form] = issue.message;
+  if (!success) {
+    for (const issue of error.issues) {
+      formErrors[issue.path[0] as keyof TLoginSchema] = issue.message;
     }
     return;
   }
 
-  return result.data;
+  return data;
 };
 
-const submit = () => {
-  const data = validateFormData();
-  if (data) console.log(data);
+const submit = async () => {
+	loading.value = true;
+  const user = validateFormData();
+
+  if (!user) {
+		loading.value = false;
+		return;
+	}
+
+	const { email, password } = user;
+
+	try {
+		const { data } = await login({ email, password });
+
+		loading.value = false;
+
+		// TODO: add session
+		console.log(data);
+		document.location.href = document.location.origin + '/dashboard';
+	} catch (err) {
+		loading.value = false;
+
+		if (err instanceof AxiosError) {
+			const { status } = err;
+
+      if (!status) {
+				toast.error('Ops! Alguma deu errado')
+				return;
+			};
+
+      const clientErrors = [HttpStatusCode.BadRequest, HttpStatusCode.NotFound]
+
+			if (clientErrors.includes(status)) {
+				toast.error('Email ou senha incorretos')
+				return;
+			}
+		}
+		toast.error('Ops! Alguma deu errado')
+	}
 };
 
 const imgUrl =
@@ -147,7 +180,11 @@ const imgUrl =
               </Input>
             </div>
           </div>
-          <Button type="submit" size="lg" class="w-full h-12">Entrar</Button>
+          <Button type="submit" size="lg" :disabled="loading" class="flex justify-center items-center w-full h-12 disabled:opacity-50">
+						<LoaderCircle v-if="loading" class="animate-spin"/>
+						<p v-else>Entrar</p>
+					</Button>
+					<Toaster />
         </form>
         <p class="mt-2 font-ibm-plex-sans text-sm xl:text-base">
           Não tem uma conta?
