@@ -18,5 +18,9 @@ public class TaskItemDTO
     public string Description { get; set; } = null!;
     public int Status { get; set; }
 
+    public DateTime Created_At { get; set; }
+    public DateTime Updated_At { get; set; }
+    public DateTime Finished_At { get; set; }
+
     
 }
