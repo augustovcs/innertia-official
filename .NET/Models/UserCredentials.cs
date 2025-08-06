@@ -12,7 +12,7 @@ using Supabase.Postgrest.Models;
 
 namespace Auth.Models;
 
-[Table("AuthCredentials")]
+[Table("auth_credentials")]
 public class AuthCredentials : BaseModel
 {
 

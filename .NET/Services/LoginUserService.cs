@@ -26,6 +26,13 @@ public class LoginUserService : IAuthService
 
     public async Task<AuthCredentials> LoginUser(LoginUserDTO credentials)
     {
+        /*
+        essa verificação está bugada!
+        ele nunca verifica apenas email ou senha, ele verifica se o email ta certo
+        se nao tiver, ele ja da null
+        se tiver, ele verifica a senha.
+
+        */
 
         var credentialPost = await _supabaseClient
             .From<AuthCredentials>()
