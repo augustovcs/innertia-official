@@ -29,7 +29,7 @@ public class RegisterUserController : ControllerBase
     //This is a endpoint to register a user based with cryptography 13rd level
     //It is not meant for production use, but for testing purposes only.
 
-    [HttpPost("register-user-auth")]
+    [HttpPost("register")]
     public async Task<IActionResult> RegisterUser ([FromBody] RegisterUserDTO user)
     {
         var user_register = await _registerService.RegisterUser(user);
