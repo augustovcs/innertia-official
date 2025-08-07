@@ -7,16 +7,15 @@ For first time looking the project, keep maintain this arc model for Interfaces.
 */
 
 
-using Auth.DTO;
-using Auth.Models;
+using Task.DTO;
 using Task.Models;
 
 namespace Task.Interfaces;
 
 public interface ITaskItem
 {
-    Task<List<TaskItemDTO>> GetAllTasks(TaskItemDTO task);
+    Task<List<TaskItemDTO>> GetAllTasks();
 
-    Task<TaskItem> AddTask_Testing(TaskItemDTO task);
+    Task<bool> AddTask(TaskItemDTO task);
     
 }
