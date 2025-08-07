@@ -29,7 +29,7 @@ public class SignUpUserController : ControllerBase
     //This is a testing endpoint to get all users created
     //It is not meant for production use, but for testing purposes only.
 
-    [HttpGet("get-all-users-created")]
+    [HttpGet("get-all-registered")]
     public async Task<IActionResult> GetAllUsersCreated()
     {
 

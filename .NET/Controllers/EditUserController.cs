@@ -29,7 +29,7 @@ public class EditUserController : ControllerBase
     //This is a endpoint to edit a user based -> working with just email and password
     //It is not meant for production use, but for testing purposes only.
 
-    [HttpPost("edit-user")]
+    [HttpPost("edit-info")]
     public async Task<IActionResult> EditUser([FromBody] AuthLoginDTO user)
     {
         var user_edit = await _editService.EditUser(user);
