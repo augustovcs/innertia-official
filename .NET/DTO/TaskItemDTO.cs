@@ -8,7 +8,7 @@ For first time looking the project, keep maintain this arc model for DTOs .
 
 using System.Text.Json.Serialization;
 
-namespace Auth.DTO;
+namespace Task.DTO;
 
 public class TaskItemDTO
 {
@@ -17,6 +17,7 @@ public class TaskItemDTO
     public string Title { get; set; } = null!;
     public string Description { get; set; } = null!;
     public int Status { get; set; }
+    public int Priority { get; set; }
 
     public DateTime Created_At { get; set; }
     public DateTime Updated_At { get; set; }

@@ -30,7 +30,7 @@ public class TaskItem : BaseModel
     // Foreign Key column below
 
     [Column("email")]
-    public string Email { get; set; } = null!;
+    public string User_Email { get; set; } = null!;
 
     // DateTime Columns
 

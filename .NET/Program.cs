@@ -1,6 +1,8 @@
 using Auth.Interfaces;
 using Auth.Services;
 using Supabase;
+using Task.Interfaces;
+using Task.Services;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
@@ -47,6 +49,7 @@ builder.Services.AddScoped<ITestingServices, AuthTestingService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<IEditService, EditService>();
 builder.Services.AddScoped<IAuthService, LoginUserService>();
+builder.Services.AddScoped<ITaskItem, ItemTaskService>();
 
 // Add CORS policy
 
