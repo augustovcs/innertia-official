@@ -42,7 +42,6 @@ public class ItemTaskService : ITaskItem
         {
             Id = c.Task_ID,
             User_ID = c.User_ID,
-            Email = c.User_Email,
             Title = c.Title,
             Description = c.Description,
             Status = c.Status,
@@ -53,6 +52,7 @@ public class ItemTaskService : ITaskItem
     public async Task<bool> AddTask(TaskItemDTO task)
     {
 
+        /*
         var credentialPost = await _supabaseClient
         .From<AuthCredentials>()
         .Where(x => x.User_ID == task.User_ID)
@@ -62,6 +62,8 @@ public class ItemTaskService : ITaskItem
         {
             throw new ValidationException("User not found! please try again");
         }
+
+        */
 
         var userResponse = await _supabaseClient
         .From<AuthCredentials>()
@@ -73,8 +75,6 @@ public class ItemTaskService : ITaskItem
             throw new ValidationException("User not found! ");
 
         }
-
-
 
         var newTask = new TaskItem
         {
@@ -118,45 +118,39 @@ public class ItemTaskService : ITaskItem
             return false;
         }
 
-        
 
     }
 
 
-    public async Task<bool> EditTask(TaskItemDTO task)
+    public async Task<bool> EditTask(int id,  TaskItemEditDTO task)
     {
 
-        if (task.Id <= 0)
-        {
-            throw new ValidationException("Id cannot be 0 or less");
-        }
 
-        var editPost = await _supabaseClient
+        var existingTask = await _supabaseClient
         .From<TaskItem>()
-        .Where(x => x.Task_ID == task.Id)
+        .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, id)
         .Single();
 
-        if (editPost == null)
+
+        if (existingTask == null)
         {
-            throw new ValidationException("Id not found!");
+            throw new ValidationException("Task not found");
 
         }
 
-        editPost.Updated_At = DateTime.UtcNow;
+        existingTask.Title = task.Title;
+        existingTask.Description = task.Description;
+        existingTask.Status = task.Status;
+        existingTask.Priority = task.Priority;
+        existingTask.Updated_At = DateTime.UtcNow;
+
 
         var response = await _supabaseClient
         .From<TaskItem>()
-        .Update(editPost);
-
-        if (response.Models == null || !response.Models.Any())
-        {
-            throw new ValidationException("Task update failed! ");
-
-
-        }
+        .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, id)
+        .Update(existingTask);
 
         return response.Models != null && response.Models.Any();
-
 
     }
 

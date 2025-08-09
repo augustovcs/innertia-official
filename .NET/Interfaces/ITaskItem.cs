@@ -18,7 +18,7 @@ public interface ITaskItem
 
     Task<bool> AddTask(TaskItemDTO task);
     Task<bool> RemoveTask(TaskItemDTO task);
-    Task<bool> EditTask(TaskItemDTO task);
-    
+    Task<bool> EditTask(int id, TaskItemEditDTO task);
+
     
 }
