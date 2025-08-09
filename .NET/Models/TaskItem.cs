@@ -17,7 +17,8 @@ public class TaskItem : BaseModel
 {
     [PrimaryKey("id", false)]
     public int Task_ID { get; set; }
-
+    [Column("user_id")]
+    public int User_ID { get; set; }
     [Column("title")]
     public string Title { get; set; } = null!;
     [Column("description")]

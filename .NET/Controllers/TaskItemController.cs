@@ -38,7 +38,7 @@ public class TaskItemController : ControllerBase
             return BadRequest("Task failed.");
         }
 
-        if (task.Email == string.Empty)
+        if (task.User_ID < 1)
         {
 
             return BadRequest("Email cannot be empty.");
@@ -55,13 +55,26 @@ public class TaskItemController : ControllerBase
         return Ok(new
         {
             message = "Task added successfully",
-            task.Id,
-            task.Email,
+            task.User_ID,
             task.Title,
             task.Description
 
         });
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> RemoveTask(int id)
+    {
+        var delete_task = await _taskService.RemoveTask(new TaskItemDTO {Id = id });
+
+        if (!delete_task)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+ 
 
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAll()

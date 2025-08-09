@@ -13,7 +13,9 @@ namespace Task.DTO;
 public class TaskItemDTO
 {
     public int Id { get; set; }
-    public string Email { get; set; } = null!;
+    public int User_ID { get; set; }
+    [JsonIgnore]
+    public string Email { get; set; }
     public string Title { get; set; } = null!;
     public string Description { get; set; } = null!;
     public int Status { get; set; }
