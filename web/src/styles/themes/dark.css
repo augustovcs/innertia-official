@@ -1,0 +1,29 @@
+@layer theme {
+  .dark {
+    --primary: #282a2c;
+    --primary-fg: #cadbdb;
+
+    --accent: #34d399;
+
+    --neutral: #3c3c3c;
+    --neutral-fg: #f3f4f6;
+
+    --error: #f43f5e;
+    --error-fg: #0f172a;
+
+    --muted: #1f2937;
+    --muted-fg: #9ca3af;
+
+    --bg: #151617;
+    --fg: #e7e7e7;
+
+    --card: #1e293b;
+    --card-fg: #f3f4f6;
+
+    --overlay: rgba(0, 0, 0, 0.7);
+
+    --border: #5b5b5b;
+    --ring: #93c5fd;
+    --focus-ring: #60a5fa;
+  }
+}

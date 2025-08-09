@@ -1,0 +1,51 @@
+@import '@/styles/fonts.css';
+
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@import '@/styles/themes/light.css';
+@import '@/styles/themes/dark.css';
+@import '@/styles/animations.css';
+
+@source "./src/**/*.{html,js,vue,ts,jsx,tsx}";
+
+@theme inline {
+  --breakpoint-xs: 22rem;
+
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+
+  --color-warning: var(--warning);
+
+  --color-neutral: var(--neutral);
+  --color-neutral-fg: var(--neutral-fg);
+
+  --color-error: var(--error);
+  --color-error-fg: var(--error-fg);
+
+  --color-muted: var(--muted);
+  --color-muted-fg: var(--muted-fg);
+
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+
+  --color-card: var(--card);
+  --color-card-fg: var(--card-fg);
+
+  --color-overlay: var(--overlay);
+
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-focus-ring: var(--focus-ring);
+  --color-link: #1b013e;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-system);
+}

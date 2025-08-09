@@ -13,7 +13,8 @@ obj/
 .idea/
 
 # Visual Studio Code files
-.vscode/
+**/.vscode/*
+!**/.vscode/settings.json
 
 # NuGet packages
 *.nupkg
@@ -67,3 +68,6 @@ efmigrations/
 # Temporary files
 *.tmp
 *.temp
+
+# Frontend
+node_modules

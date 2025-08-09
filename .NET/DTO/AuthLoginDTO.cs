@@ -13,11 +13,16 @@ namespace Auth.DTO;
 
 public class AuthLoginDTO
 {
+    [JsonPropertyName("id")]
+    public int Id { get; set; }
 
     [JsonPropertyName("email")]
-    public string Email { get; set; }
+    public string? Email { get; set; } = null!;
     [JsonPropertyName("password_hash")]
-    public string Password { get; set; }
+    public string? Password { get; set; }
+
+    [JsonPropertyName("updated_at")]
+    public DateTime updated_at { get; set; }
 
 
 }

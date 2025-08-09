@@ -1,0 +1,14 @@
+services:
+  api:
+    build: ./.NET
+    ports:
+      - 8080:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    
+  web:
+    build: ./web
+    volumes:
+      - ./web:/src
+    ports:
+      - 5173:5173

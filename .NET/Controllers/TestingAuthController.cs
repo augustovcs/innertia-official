@@ -8,7 +8,6 @@ For first time looking the project, keep maintain this arc model for controllers
 
 using Auth.DTO;
 using Auth.Interfaces;
-using BCrypt.Net;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -30,7 +29,7 @@ public class SignUpUserController : ControllerBase
     //This is a testing endpoint to get all users created
     //It is not meant for production use, but for testing purposes only.
 
-    [HttpGet("get-all-users-created")]
+    [HttpGet("get-all-registered")]
     public async Task<IActionResult> GetAllUsersCreated()
     {
 
@@ -62,6 +61,11 @@ public class SignUpUserController : ControllerBase
         });
     }
 
+
+    /*
+
+    THIS IS THE TEST LOGIN METHOD - DONT USE IT PLEASE
+
     [HttpPost("test-login")]
     public async Task<IActionResult> TestingLogin([FromBody] RegisterUserDTO user)
     {
@@ -80,9 +84,10 @@ public class SignUpUserController : ControllerBase
         {
             message = "User logged successfully",
             user.Email,
-            hashedPassword
+            // hashedPassword // LOG TEST - just for testing, not for production use for evicting leaks 
         });
 
     }
-
+    
+    */
 }

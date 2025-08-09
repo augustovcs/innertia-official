@@ -1,0 +1,42 @@
+Essa é a documentação do projeto
+
+
+##ARQUITETURA##
+
+- A arquitetura do projeto é baseada em alguns pilares, sendo eles:
+
+- **Controllers**: Responsáveis por receber as requisições e retornar as respostas. Eles não devem conter lógica de negócio, apenas delegar para os serviços.
+- **Services**: Responsáveis por conter a lógica de negócio. Eles são chamados pelos controllers
+- **Models**: Representam os dados do sistema. Eles são usados pelos serviços para manipular os dados.
+- **Interfaces**: Definem os contratos dos serviços. Eles são usados pelos controllers para chamar os serviços.
+- **Repositories**: Responsáveis por acessar os dados. Eles são usados pelos serviços para manipular os dados.
+- **DTOs**: Objetos de transferência de dados. Eles são usados para transferir dados entre os controllers e os serviços.
+- **Configurations**: Responsáveis por carregar as configurações do sistema. Eles são usados pelos serviços para acessar as configurações.
+- **Middlewares**: Responsáveis por interceptar as requisições e respostas. Eles são usados para adicionar funcionalidades como autenticação, autorização, logging, etc.
+
+
+Todas vezes que forem utilizar chaves de fora, implementar e etc,
+por gentileza, colocar juntamente aqui no documento e sempre implantar no Development
+
+
+A organização desse projeto é baseada na arquitetura limpa, onde cada camada tem sua responsabilidade bem definida.
+ Isso facilita a manutenção e evolução do sistema, 
+ além de permitir uma melhor testabilidade.
+
+
+ Abaixo coloque detalhes/notas e definições importantes juntamente com seu nome:
+
+##NOTAS##
+
+#João Augusto {
+
+    A definição dos controllers tá sendo feita de forma linear
+    ou seja, eu estou criando controllers com intuito de teste para verificar a conexão
+    e manter um codigo-base para ao longo do desenvolvimento do projeto,
+    então, não se preocupe com a organização dos controllers nesse momento,
+    pois eles serão reestruturados posteriormente.
+
+
+
+    Adicionado branch develop
+}

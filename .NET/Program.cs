@@ -1,9 +1,23 @@
 using Auth.Interfaces;
 using Auth.Services;
 using Supabase;
+using Task.Interfaces;
+using Task.Services;
+
+var AllowSpecificOrigins = "innertiaWeb";
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy(name: AllowSpecificOrigins,
+										 policy =>
+										 {
+											 policy.WithOrigins("http://localhost:5173")
+											 .AllowAnyHeader()
+											 .AllowAnyMethod();
+										 });
+});
 
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
@@ -11,13 +25,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<Supabase.Client>(_ =>
 new Supabase.Client(
-    builder.Configuration["SupabaseUrl"],
-    builder.Configuration["SupabaseKey"],
-    new SupabaseOptions
-    {
-        AutoRefreshToken = true,
-        AutoConnectRealtime = true,
-    }
+		builder.Configuration["SupabaseUrl"] ?? throw new ArgumentNullException("SupabaseUrl is not configured"),
+		builder.Configuration["SupabaseKey"],
+		new SupabaseOptions
+		{
+			AutoRefreshToken = true,
+			AutoConnectRealtime = true,
+		}
 ));
 
 /*
@@ -33,9 +47,15 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<ITestingServices, AuthTestingService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
+builder.Services.AddScoped<IEditService, EditService>();
+builder.Services.AddScoped<IAuthService, LoginUserService>();
+builder.Services.AddScoped<ITaskItem, ItemTaskService>();
+
+// Add CORS policy
 
 var app = builder.Build();
 
+app.UseCors(AllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -45,8 +65,8 @@ app.MapControllers();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 
 }
 

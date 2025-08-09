@@ -29,7 +29,7 @@ public class RegisterUserController : ControllerBase
     //This is a endpoint to register a user based with cryptography 13rd level
     //It is not meant for production use, but for testing purposes only.
 
-    [HttpPost("register-user-auth")]
+    [HttpPost("register")]
     public async Task<IActionResult> RegisterUser ([FromBody] RegisterUserDTO user)
     {
         var user_register = await _registerService.RegisterUser(user);
@@ -39,13 +39,25 @@ public class RegisterUserController : ControllerBase
             return BadRequest("User already exists or registration failed.");
         }
 
+        if (user.Email == string.Empty || user.Password == string.Empty)
+        {
+            
+            return BadRequest("Email and Password cannot be empty.");
+            
+        }
+
+        if (user_register == false)
+        {
+            return BadRequest("User registration failed.");
+        }
+
         // Registration successful
         Console.WriteLine($"User registered: {user_register}");
         return Ok(new
         {
             message = "User registered successfully",
             user.Email,
-            user.Password //remover em breve, para evitar endpoint soltando senha crua
+            // user.Password // LOG TEST removed for security reasons, not for production use for evicting leaks
         });
     }
 

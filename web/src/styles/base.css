@@ -1,0 +1,6 @@
+@layer base {
+  body {
+    @apply bg-bg text-primary;
+    font-family: var(--font-system);
+  }
+}

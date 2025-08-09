@@ -12,12 +12,12 @@ using Supabase.Postgrest.Models;
 
 namespace Auth.Models;
 
-[Table("AuthCredentials")]
+[Table("auth_credentials")]
 public class AuthCredentials : BaseModel
 {
 
     [PrimaryKey("id", false)]
-    public int? User_ID { get; set; }
+    public int User_ID { get; set; }
 
     [Column("email")]
     public string Email_Id { get; set; } = string.Empty;
@@ -27,6 +27,9 @@ public class AuthCredentials : BaseModel
 
     [Column("is_admin")]
     public bool Is_Admin { get; set; }
+
+    [Column("updated_at")]
+    public DateTime Last_Update { get; set; }
 
 
 

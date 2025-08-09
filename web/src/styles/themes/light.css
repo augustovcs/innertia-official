@@ -1,0 +1,30 @@
+@layer theme {
+  :root {
+    --primary: #47494c;
+    --primary-fg: #ffffff;
+
+    --accent: #7ed957;
+
+    --warning: #eb8038;
+
+    --neutral: #bdc4cc;
+    --neutral-fg: #1e293b;
+
+    --error: #e41100;
+
+    --muted: #f9fafb;
+    --muted-fg: #6b7280;
+
+    --bg: #f9fafb;
+    --fg: #1e293b;
+
+    --card: #ffffff;
+    --card-fg: #1e293b;
+
+    --overlay: rgba(0, 0, 0, 0.6);
+
+    --border: #d1d5db;
+    --ring: #1e3a8a;
+    --focus-ring: #3b82f6;
+  }
+}

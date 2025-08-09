@@ -89,9 +89,15 @@ public class AuthTestingService : ITestingServices
 
             bool verifyHashed = BCrypt.Net.BCrypt.EnhancedVerify(credentials.Password, user.Password_Id);
 
+            /* 
+            LOG TESTING
+             this is just for testing, not for production use for evicting leaks
+
             Console.WriteLine($"Password (hash): {user.Password_Id}");
             Console.WriteLine($"Password (crude): {credentials.Password}");
 
+
+            */
             return verifyHashed;
             
 
