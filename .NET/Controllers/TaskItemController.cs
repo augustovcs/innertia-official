@@ -9,6 +9,8 @@ For first time looking the project, keep maintain this arc model for controllers
 using Task.DTO;
 using Task.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Supabase.Gotrue;
 
 namespace Task.Controllers;
 
@@ -38,7 +40,7 @@ public class TaskItemController : ControllerBase
             return BadRequest("Task failed.");
         }
 
-        if (task.Email == string.Empty)
+        if (task.User_ID < 1)
         {
 
             return BadRequest("Email cannot be empty.");
@@ -55,13 +57,47 @@ public class TaskItemController : ControllerBase
         return Ok(new
         {
             message = "Task added successfully",
-            task.Id,
-            task.Email,
+            task.User_ID,
             task.Title,
             task.Description
 
         });
     }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> EditTask(int id, [FromBody] TaskItemEditDTO task)
+    {
+
+
+        
+        var edit_task = await _taskService.EditTask(id, task);
+
+        if (!edit_task)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+
+        
+    }
+    
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> RemoveTask(int id)
+    {
+
+
+        var delete_task = await _taskService.RemoveTask(new TaskItemDTO {Id = id });
+
+        if (!delete_task)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+ 
 
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAll()
