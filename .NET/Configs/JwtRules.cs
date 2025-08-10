@@ -12,7 +12,6 @@ public class JwtTokenGenerator
 {
     private readonly IConfiguration _config;
 
-
     public JwtTokenGenerator(IConfiguration config)
     {
         _config = config;
@@ -20,6 +19,7 @@ public class JwtTokenGenerator
 
     public string GenerateToken(int id, string email)
     {
+        
         var securityKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_config["Jwt:Key"])
         );
