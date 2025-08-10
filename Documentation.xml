@@ -26,6 +26,9 @@ A organização desse projeto é baseada na arquitetura limpa, onde cada camada 
 
  Abaixo coloque detalhes/notas e definições importantes juntamente com seu nome:
 
+
+
+
 ##NOTAS##
 
 #João Augusto {
@@ -40,3 +43,14 @@ A organização desse projeto é baseada na arquitetura limpa, onde cada camada 
 
     Adicionado branch develop
 }
+
+
+
+**CONEXÃO BACK-END COM FRONT-END** 
+
+-> criar diretorio .env no /web 
+-> implementar linha de código Abaixo
+
+VITE_PUBLIC_API_URL=http://localhost:5197/api
+
+MUDAR porta 5197 para outra caso esteja usando docker, vps e etc...
