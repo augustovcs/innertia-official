@@ -71,3 +71,4 @@ efmigrations/
 
 # Frontend
 node_modules
+.env

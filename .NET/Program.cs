@@ -4,6 +4,7 @@ using Supabase;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Task.Interfaces;
 using Task.Services;
+using Configs.JwtRules;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
@@ -51,6 +52,7 @@ builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<IEditService, EditService>();
 builder.Services.AddScoped<IAuthService, LoginUserService>();
 builder.Services.AddScoped<ITaskItem, ItemTaskService>();
+builder.Services.AddScoped<JwtTokenGenerator>();
 
 var secretKey = builder.Configuration["Jwt:Key"];
 

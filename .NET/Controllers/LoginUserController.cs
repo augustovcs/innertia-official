@@ -15,13 +15,9 @@ public class LoginUserController : ControllerBase
     private readonly IAuthService _authTesting;
     private readonly JwtTokenGenerator _jwtTokenGenerator;
 
-    public LoginUserController(IAuthService authTesting)
+    public LoginUserController(IAuthService authTesting, JwtTokenGenerator jwtTokenGenerator)
     {
         _authTesting = authTesting;
-    }
-
-    public LoginUserController(JwtTokenGenerator jwtTokenGenerator)
-    {
         _jwtTokenGenerator = jwtTokenGenerator;
 
     }
