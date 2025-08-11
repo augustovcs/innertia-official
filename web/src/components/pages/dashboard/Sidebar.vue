@@ -5,7 +5,7 @@ import {
 	Calendar,
 	Home,
 	List,
-	LogOut,
+	MessageCircleQuestion,
 	NotebookPen,
 	Settings,
 	type LucideProps,
@@ -26,67 +26,69 @@ const generalMenu: MenuItems[] = [
   { name: 'Tarefas', icon: List, path: '/tasks' },
   { name: 'Agenda', icon: NotebookPen, path: '/notes' },
 ];
+
+const othersMenu: MenuItems[] = [
+  { name: 'Configurações', icon: Settings, path: '/settings' },
+  {
+    name: 'Centro de Ajuda',
+    icon: MessageCircleQuestion,
+    path: '/help-center',
+  },
+];
 </script>
 
 <template>
-  <div class="min-h-full">
+  <div class="h-screen max-h-screen pr-4 border-r-2 border-border/50">
     <aside
-      :class="`flex flex-col justify-between transition-all duration-300 ease-in-out overflow-hidden min-w-[16rem] min-h-full border-r-2 border-border/60`"
+      class="flex flex-col justify-between transition-all duration-300 ease-in-out overflow-hidden min-w-[16rem] min-h-full pl-4.5"
     >
-      <div class="h-full flex flex-col gap-6">
-        <div class="ml-8 mt-4">
-          <LogoIcon height="64" width="150" class="text-fg" />
+      <div class="h-full flex flex-col gap-10">
+        <div class="mt-4">
+          <LogoIcon height="64" width="154" class="text-fg" />
         </div>
         <ul
-          :class="`flex flex-col justify-items-center 2xl:justify-items-baseline gap-y-4 mx-2 py-4 transition-all duration-300 mb-4`"
+          class="flex flex-col justify-items-center 2xl:justify-items-baseline gap-y-4 transition-all duration-300 mb-4"
         >
           <li
             v-for="{ name, icon, path } in generalMenu"
             :key="name"
             @click="() => store.current(path)"
-            :class="`cursor-pointer transition-all duration-300 ease-in-out flex gap-x-4 p-[0.65rem] rounded-2xl
-						  ${store.page === path ? 'text-primary bg-primary/15' : 'text-primary/70 hover:text-primary hover:bg-primary/5'}`"
+            :class="`cursor-pointer transition-all duration-300 ease-in-out flex items-center gap-x-3 p-[0.65rem] py-2.5 rounded-lg
+						  ${store.page === path ? 'text-fg bg-muted-fg/10' : 'text-muted-fg hover:text-primary'}`"
           >
             <component
               :is="icon"
-              :class="`transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap ml-2 mr-1 size-6`"
+              class="transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap ml-2 mr-1 size-5"
             />
             <h4
-              :class="`transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap 
-              opacity-100 w-[10rem] font-ibm-plex-sans font-medium`"
+              class="transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap opacity-100 w-[10rem] font-ibm-plex-sans font-medium"
             >
               {{ name }}
             </h4>
           </li>
         </ul>
       </div>
-      <div class="flex flex-col gap-y-2 border-t-2 border-zinc-300/20 pt-4 m-2 mb-8 pl-1">
-        <button
-          class="cursor-pointer text-primary/80 hover:text-primary selected:bg-red-300/70 hover:bg-primary/10 transition-all duration-250 flex gap-x-4 rounded-2xl p-[0.65rem]"
-					@click="store.current('/settings')"
+      <ul
+        class="flex flex-col justify-items-center 2xl:justify-items-baseline gap-y-2 mb-6 transition-all duration-300 border-t-2 border-border/50 pt-4"
+      >
+        <li
+          v-for="{ name, icon, path } in othersMenu"
+          :key="name"
+          @click="() => store.current(path)"
+          :class="`cursor-pointer transition-all duration-300 ease-in-out flex items-center gap-x-3 p-[0.65rem] py-2.5 rounded-lg
+						  ${store.page === path ? 'text-fg bg-muted-fg/10' : 'text-muted-fg hover:text-primary'}`"
         >
-          <Settings
-            :class="`transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap ml-2 size-6`"
+          <component
+            :is="icon"
+            class="transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap ml-2 mr-1 size-5"
           />
           <h4
-            :class="`transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap opacity-100 font-medium`"
+            class="transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap opacity-100 w-[10rem] font-ibm-plex-sans font-medium"
           >
-            Configurações
+            {{ name }}
           </h4>
-        </button>
-        <button
-          class="cursor-pointer text-primary/80 hover:text-error/80 selected:bg-red-300/70 hover:bg-error/15 transition-all duration-250 flex gap-x-4 rounded-2xl p-[0.65rem]"
-        >
-          <LogOut
-            :class="`transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap ml-2 size-6`"
-          />
-          <h4
-            :class="`transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap opacity-100 font-medium`"
-          >
-            Sair
-          </h4>
-        </button>
-      </div>
+        </li>
+      </ul>
     </aside>
   </div>
 </template>
