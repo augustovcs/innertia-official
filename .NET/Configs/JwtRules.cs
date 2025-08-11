@@ -48,7 +48,7 @@ public class JwtTokenGenerator
         // Pull the symmetric key and transform into a sha256 encrypted algorithm
 
         var credentials = new SigningCredentials(securityKey,
-        SecurityAlgorithms.Aes128CbcHmacSha256);
+        SecurityAlgorithms.HmacSha512);
 
         // creates the payload based on email, id and JTI
 

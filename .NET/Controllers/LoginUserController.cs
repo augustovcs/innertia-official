@@ -39,11 +39,9 @@ public class LoginUserController : ControllerBase
 
         return Ok(new
         {
+            message = "User logged successfully",
             token,
             user = new { user.Id, user.Email},
-
-            message = "User logged successfully",
-            email = user.Email
         });
     }
 }
