@@ -3,10 +3,7 @@ import { useToasterStore } from '@/stores/toaster';
 export function useToast() {
   const store = useToasterStore();
 
-  const show = (
-    status: 'success' | 'error' | 'warning',
-    title: string,
-  ) => {
+  const show = (status: 'success' | 'error' | 'warning', title: string) => {
     store.add({
       id: Date.now().toString(),
       status,
@@ -15,11 +12,8 @@ export function useToast() {
   };
 
   return {
-    success: (title: string) =>
-      show('success', title),
-    error: (title: string) =>
-      show('error', title),
-    warning: (title: string) =>
-      show('warning', title),
+    success: (title: string) => show('success', title),
+    error: (title: string) => show('error', title),
+    warning: (title: string) => show('warning', title),
   };
 }

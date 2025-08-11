@@ -6,7 +6,11 @@ import Input from '@/components/ui/Input.vue';
 import Label from '@/components/ui/Label.vue';
 import Toaster from '@/components/ui/Toaster.vue';
 import { useToast } from '@/composables/useToast';
-import { signUp, signUpSchema, type TSignUpSchema } from '@/services/auth/signUp';
+import {
+  signUp,
+  signUpSchema,
+  type TSignUpSchema,
+} from '@/services/auth/signUp';
 import { AxiosError, HttpStatusCode } from 'axios';
 import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next';
 import { reactive, ref } from 'vue';
@@ -19,19 +23,21 @@ const loading = ref<boolean>(false);
 const showPassword = ref<boolean>(false);
 const showPasswordConfirmation = ref<boolean>(false);
 
-const formData = reactive<Record<keyof TSignUpSchema, string | boolean | undefined>>({
+const formData = reactive<
+  Record<keyof TSignUpSchema, string | boolean | undefined>
+>({
   fullname: undefined,
   email: undefined,
   password: undefined,
   confirmPassword: undefined,
-	termsAccepted: false,
+  termsAccepted: false,
 });
 const formErrors = reactive<Record<keyof TSignUpSchema, string | undefined>>({
   fullname: undefined,
   email: undefined,
   password: undefined,
   confirmPassword: undefined,
-	termsAccepted: undefined,
+  termsAccepted: undefined,
 });
 
 const validateFormField = (fieldName: keyof TSignUpSchema) => {
@@ -74,44 +80,44 @@ const validateFormData = (): TSignUpSchema | undefined => {
 };
 
 const submit = async () => {
-	loading.value = true;
+  loading.value = true;
   const user = validateFormData();
 
   if (!user) {
-		loading.value = false;
+    loading.value = false;
     return;
-	}
+  }
 
-	const { email, password } = user;
+  const { email, password } = user;
 
-	try {
-		const { data } = await signUp({ email, password_hash: password });
+  try {
+    const { data } = await signUp({ email, password_hash: password });
 
     loading.value = false;
 
-		// TODO: add session
-		console.log(data);
-		document.location.href = document.location.origin + '/dashboard';
-	} catch (err) {
-		loading.value = false;
+    // TODO: add session
+    console.log(data);
+    document.location.href = document.location.origin + '/dashboard';
+  } catch (err) {
+    loading.value = false;
 
-		if (err instanceof AxiosError) {
-			const { status } = err;
+    if (err instanceof AxiosError) {
+      const { status } = err;
 
       if (!status) {
-				toast.error('Ops! Alguma deu errado')
-				return;
-			};
+        toast.error('Ops! Alguma deu errado');
+        return;
+      }
 
-      const clientErrors = [HttpStatusCode.BadRequest, HttpStatusCode.NotFound]
+      const clientErrors = [HttpStatusCode.BadRequest, HttpStatusCode.NotFound];
 
-			if (clientErrors.includes(status)) {
-				toast.error('Email ou senha incorretos')
-				return;
-			}
-		}
-		toast.error('Ops! Alguma deu errado')
-	}
+      if (clientErrors.includes(status)) {
+        toast.error('Email ou senha incorretos');
+        return;
+      }
+    }
+    toast.error('Ops! Alguma deu errado');
+  }
 };
 
 const imgUrl =
@@ -235,7 +241,11 @@ const imgUrl =
               </Input>
             </div>
           </div>
-          <Checkbox v-model="formData['termsAccepted']" name="termPolicy" value="accept">
+          <Checkbox
+            v-model="formData['termsAccepted']"
+            name="termPolicy"
+            value="accept"
+          >
             <label class="text-sm xl:text-base">
               Concordo com os
               <a href="#" class="text-link hover:underline"
@@ -243,11 +253,16 @@ const imgUrl =
               >
             </label>
           </Checkbox>
-          <Button type="submit" size="lg" :disabled="loading" class="flex justify-center items-center w-full h-12 disabled:opacity-50">
-						<LoaderCircle v-if="loading" class="animate-spin"/>
-						<p v-else>Registrar conta</p>
-					</Button>
-					<Toaster />
+          <Button
+            type="submit"
+            size="lg"
+            :disabled="loading"
+            class="flex justify-center items-center w-full h-12 disabled:opacity-50"
+          >
+            <LoaderCircle v-if="loading" class="animate-spin" />
+            <p v-else>Registrar conta</p>
+          </Button>
+          <Toaster />
         </form>
         <p class="mt-2 font-ibm-plex-sans text-sm xl:text-base">
           Já tem uma conta?

@@ -3,8 +3,8 @@ import { useToasterStore, type ToastStatus } from '@/stores/toaster';
 import { twMerge } from 'tailwind-merge';
 
 const iconUrl = (status: ToastStatus) => {
-	return new URL(`../../assets/${status}.svg`, import.meta.url).href
-}
+  return new URL(`../../assets/${status}.svg`, import.meta.url).href;
+};
 
 const statusClasses = {
   error: ['text-error'],
@@ -43,7 +43,11 @@ const store = useToasterStore();
               )
             "
           >
-            <img :src="iconUrl(status)" :alt="`toast icon ${status}`" class="size-5" />
+            <img
+              :src="iconUrl(status)"
+              :alt="`toast icon ${status}`"
+              class="size-5"
+            />
             <h1
               class="text-base text-zinc-800 dark:text-zinc-100 font-ibm-plex-sans font-normal"
             >

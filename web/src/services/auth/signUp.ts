@@ -14,7 +14,7 @@ export const signUpSchema = z
       .string('Campo obrigatório')
       .min(6, 'A senha deve conter pelo menos 6 caracteres'),
     confirmPassword: z.string('As senhas não coincidem'),
-		termsAccepted: z.boolean(),
+    termsAccepted: z.boolean(),
   })
   .superRefine(({ password, confirmPassword, termsAccepted }, ctx) => {
     if (password !== confirmPassword) {
@@ -24,13 +24,13 @@ export const signUpSchema = z
         path: ['confirmPassword'],
       });
     }
-		if (!termsAccepted) {
-			ctx.addIssue({
-				code: 'custom',
-				message: 'A concordância com os termos é obrigatória',
-				path: ['termsAccepted'],
-			});
-		}
+    if (!termsAccepted) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'A concordância com os termos é obrigatória',
+        path: ['termsAccepted'],
+      });
+    }
   });
 
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
