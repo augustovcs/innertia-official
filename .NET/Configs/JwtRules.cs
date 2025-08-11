@@ -7,6 +7,12 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace Configs.JwtRules;
 
+/*
+This is a method that we generate a JWT Token for multi-layer comsumption as front-end and database
+Here we are going to doc each part of this class.
+
+*/
+
 
 public class JwtTokenGenerator
 {
@@ -17,15 +23,34 @@ public class JwtTokenGenerator
         _config = config;
     }
 
+
+    /*
+
+    This method generates a token from id and email, based on the Base64 
+    string key on appsettings.Development
+
+    */
     public string GenerateToken(int id, string email)
     {
-        
+
+        var jwtKey = _config["Jwt:Key"];
+        if (string.IsNullOrEmpty(jwtKey))
+        {
+            throw new Exception("JWT IS MISSING ");
+        }
+
+        // Defines the appsettings key as a symmetric key
+
         var securityKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_config["Jwt:Key"])
+            Encoding.UTF8.GetBytes(jwtKey)
         );
 
+        // Pull the symmetric key and transform into a sha256 encrypted algorithm
+
         var credentials = new SigningCredentials(securityKey,
-        SecurityAlgorithms.Aes128CbcHmacSha256);
+        SecurityAlgorithms.HmacSha512);
+
+        // creates the payload based on email, id and JTI
 
         var claims = new[] {
             new Claim(JwtRegisteredClaimNames.Sub, email),
@@ -33,6 +58,8 @@ public class JwtTokenGenerator
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
 
         };
+
+        //fiiiiinally creates the tokeeeeeeeeeen
 
         var token = new JwtSecurityToken(
             issuer: _config["Jwt:Issuer"],
