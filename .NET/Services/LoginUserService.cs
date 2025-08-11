@@ -7,6 +7,7 @@ For first time looking the project, keep maintain this arc model for Services.
 */
 
 
+using System.ComponentModel.DataAnnotations;
 using Auth.DTO;
 using Auth.Interfaces;
 using Auth.Models;
@@ -42,8 +43,10 @@ public class LoginUserService : IAuthService
             if (credentialPost == null || !credentialPost.Models.Any())
             {
             ///Console.WriteLine("Wrong email");
-            return null;
+            throw new ValidationException("Wrong email");
             }
+
+            
 
             var user = credentialPost.Models.First();
             
@@ -53,7 +56,7 @@ public class LoginUserService : IAuthService
             if (!verifyHashed)
             {
             ///Console.WriteLine("Wrong password");
-            return null;
+            throw new ValidationException("Wrong hashed password");
             }
 
         /*
@@ -64,8 +67,7 @@ public class LoginUserService : IAuthService
         Console.WriteLine($"Password (crude): {credentials.Password}");
 
         */
-        
-            
+                    
             return user;
 
         

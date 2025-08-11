@@ -9,7 +9,8 @@ For first time looking the project, keep maintain this arc model for Services.
 
 using System.ComponentModel.DataAnnotations;
 using Auth.Models;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Supabase.Gotrue;
 using Task.DTO;
 using Task.Interfaces;
 using Task.Models;
@@ -27,6 +28,9 @@ public class ItemTaskService : ITaskItem
         _supabaseClient = supabaseClient;
     }
 
+    
+
+
     public async Task<List<TaskItemDTO>> GetAllTasks()
     {
         var taskPost = await _supabaseClient
@@ -34,22 +38,24 @@ public class ItemTaskService : ITaskItem
         .Get();
 
         return taskPost.Models.Select(c => new TaskItemDTO
+
         {
             Id = c.Task_ID,
-            Email = c.User_Email,
+            User_ID = c.User_ID,
             Title = c.Title,
             Description = c.Description,
             Status = c.Status,
-            Created_At = c.Created_At            
+            Created_At = c.Created_At
         }).ToList();
     }
 
     public async Task<bool> AddTask(TaskItemDTO task)
     {
 
+        /*
         var credentialPost = await _supabaseClient
         .From<AuthCredentials>()
-        .Where(x => x.Email_Id == task.Email)
+        .Where(x => x.User_ID == task.User_ID)
         .Single();
 
         if (credentialPost == null)
@@ -57,13 +63,28 @@ public class ItemTaskService : ITaskItem
             throw new ValidationException("User not found! please try again");
         }
 
+        */
+
+        var userResponse = await _supabaseClient
+        .From<AuthCredentials>()
+        .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, task.User_ID)
+        .Single();
+
+        if (userResponse == null)
+        {
+            throw new ValidationException("User not found! ");
+
+        }
+
         var newTask = new TaskItem
         {
+
+            User_ID = task.User_ID,
+            User_Email = userResponse.Email_Id,
             Title = task.Title,
             Description = task.Description,
-            Priority = task.Priority,
             Status = task.Status,
-            User_Email = task.Email,
+            Priority = task.Priority,
             Created_At = DateTime.Now,
 
 
@@ -73,12 +94,64 @@ public class ItemTaskService : ITaskItem
         var response = await _supabaseClient
         .From<TaskItem>()
         .Insert(newTask);
+      
 
         return response.Models != null && response.Models.Any();
- 
+
+    }
+
+    public async Task<bool> RemoveTask(TaskItemDTO task)
+    {
+
+        try
+        {
+            await _supabaseClient
+            .From<TaskItem>()
+            .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, task.Id)
+            .Delete();
+
+            return true;
+        }
+
+        catch
+        {
+            return false;
+        }
 
 
-        
+    }
+
+
+    public async Task<bool> EditTask(int id,  TaskItemEditDTO task)
+    {
+
+
+        var existingTask = await _supabaseClient
+        .From<TaskItem>()
+        .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, id)
+        .Single();
+
+
+        if (existingTask == null)
+        {
+            throw new ValidationException("Task not found");
+
+        }
+
+        existingTask.Title = task.Title;
+        existingTask.Description = task.Description;
+        existingTask.Status = task.Status;
+        existingTask.Priority = task.Priority;
+        existingTask.Updated_At = DateTime.UtcNow;
+
+
+        var response = await _supabaseClient
+        .From<TaskItem>()
+        .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, id)
+        .Update(existingTask);
+
+        return response.Models != null && response.Models.Any();
+
     }
 
 

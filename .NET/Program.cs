@@ -1,8 +1,10 @@
 using Auth.Interfaces;
 using Auth.Services;
 using Supabase;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Task.Interfaces;
 using Task.Services;
+using Configs.JwtRules;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
@@ -11,12 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy(name: AllowSpecificOrigins,
-										 policy =>
-										 {
-											 policy.WithOrigins("http://localhost:5173")
-											 .AllowAnyHeader()
-											 .AllowAnyMethod();
-										 });
+	policy =>
+	{
+		policy.WithOrigins("http://localhost:5173")
+		.AllowAnyHeader()
+		.AllowAnyMethod();
+	});
 });
 
 builder.Services.AddAuthorization();
@@ -50,6 +52,10 @@ builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<IEditService, EditService>();
 builder.Services.AddScoped<IAuthService, LoginUserService>();
 builder.Services.AddScoped<ITaskItem, ItemTaskService>();
+builder.Services.AddScoped<JwtTokenGenerator>();
+
+var secretKey = builder.Configuration["Jwt:Key"];
+
 
 // Add CORS policy
 
