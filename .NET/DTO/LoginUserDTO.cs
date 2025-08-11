@@ -22,7 +22,7 @@ public class LoginUserDTO
 }
 
 
-public class LoginUserDTO_FULL : LoginUserDTO
+public class LoginUserFullDTO : LoginUserDTO
 {
     [JsonPropertyName("id")]
     public int Id { get; set; }

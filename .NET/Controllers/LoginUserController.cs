@@ -23,7 +23,7 @@ public class LoginUserController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Authentication([FromBody] LoginUserDTO_FULL user)
+    public async Task<IActionResult> Authentication([FromBody] LoginUserFullDTO user)
     {
         AuthCredentials loginSuccess = await _authTesting.LoginUser(user);
 
