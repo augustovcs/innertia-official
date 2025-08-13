@@ -26,8 +26,10 @@ public class LoginUserFullDTO : LoginUserDTO
 {
     [JsonPropertyName("id")]
     public int Id { get; set; }
-    [JsonPropertyName("role")]
-    public string Role { get; set; } = null!;
+
+
+    //[JsonPropertyName("role")]
+    //public string Role { get; set; } = null!;
 }
 
 
