@@ -25,7 +25,7 @@ public class LoginUserService : IAuthService
         _supabaseClient = supabaseClient;
     }
 
-    public async Task<AuthCredentials> LoginUser(LoginUserDTO credentials)
+    public async Task<AuthCredentials> LoginUser(LoginUserFullDTO credentials)
     {
         /*
         essa verificação está bugada!
@@ -37,38 +37,50 @@ public class LoginUserService : IAuthService
 
         var credentialPost = await _supabaseClient
             .From<AuthCredentials>()
-            .Where(c => c.Email_Id == credentials.Email)
-            .Get();
+            .Filter("email", Supabase.Postgrest.Constants.Operator.Equals, credentials.Email)
+            .Single();
 
-            if (credentialPost == null || !credentialPost.Models.Any())
+            if (credentialPost == null)
             {
             ///Console.WriteLine("Wrong email");
             throw new ValidationException("Wrong email");
             }
 
+            bool verifyHashed = BCrypt.Net.BCrypt.EnhancedVerify(credentials.Password, credentialPost.Password_Id);
             
-
-            var user = credentialPost.Models.First();
-            
-
-            bool verifyHashed = BCrypt.Net.BCrypt.EnhancedVerify(credentials.Password, user.Password_Id);
-
             if (!verifyHashed)
             {
             ///Console.WriteLine("Wrong password");
             throw new ValidationException("Wrong hashed password");
             }
 
+            var user = new AuthCredentials
+            {
+                User_ID = credentialPost.User_ID,
+                Email_Id = credentialPost.Email_Id,
+                Password_Id = credentialPost.Password_Id
+            };
+
+
+
+
+
+
+
+
+
         /*
         LOG TESTING
         this is just for testing, not for production use for evicting leaks
-
-        Console.WriteLine($"Password (hash): {user.Password_Id}");
-        Console.WriteLine($"Password (crude): {credentials.Password}");
-
         */
-                    
-            return user;
+
+        //Console.WriteLine($"Password (hash): {user.Password_Id}");
+        //Console.WriteLine($"Password (crude): {credentials.Password}");
+        Console.WriteLine($"the id: {user.User_ID}");
+
+
+        
+        return user;
 
         
     }
