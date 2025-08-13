@@ -34,14 +34,15 @@ public class LoginUserController : ControllerBase
 
         Console.WriteLine($"User logged: {user.Email}");
 
-        var token = _jwtTokenGenerator.GenerateToken(user.Id, user.Email);
+        var token = _jwtTokenGenerator.GenerateToken(loginSuccess.User_ID, user.Email);
 
 
         return Ok(new
         {
             message = "User logged successfully",
             token,
-            user = new { user.Id, user.Email},
+            user = new { loginSuccess.User_ID, loginSuccess.Email_Id },
+            
         });
     }
 }
