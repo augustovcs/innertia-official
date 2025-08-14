@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Task.Interfaces;
 using Task.Services;
 using Configs.JwtRules;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
@@ -24,6 +26,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddScoped<Supabase.Client>(_ =>
 new Supabase.Client(
@@ -62,6 +65,9 @@ var secretKey = builder.Configuration["Jwt:Key"];
 var app = builder.Build();
 
 app.UseCors(AllowSpecificOrigins);
+
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -73,6 +79,7 @@ if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
+
 
 }
 

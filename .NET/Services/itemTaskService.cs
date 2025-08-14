@@ -138,10 +138,30 @@ public class ItemTaskService : ITaskItem
 
         }
 
-        existingTask.Title = task.Title;
-        existingTask.Description = task.Description;
-        existingTask.Status = task.Status;
-        existingTask.Priority = task.Priority;
+        bool isTitleValid = !string.IsNullOrWhiteSpace(task.Title) && task.Title != "string" && task.Title != existingTask.Title;
+        if (isTitleValid)
+        {
+            existingTask.Title = task.Title;
+        }
+
+        bool isDescriptionValid = !string.IsNullOrWhiteSpace(task.Description) && task.Description != "string" && task.Description != existingTask.Description;
+        if (isDescriptionValid)
+        {
+            existingTask.Description = task.Description;
+        }
+
+        bool isStatusValid = task.Status != 0 &&  task.Status >= 1  &&task.Status != existingTask.Status;
+        if (isStatusValid)
+        {
+            existingTask.Status = task.Status;
+        }
+
+        bool isPriorityValid = task.Priority != 0 &&  task.Priority >= 1  &&task.Priority != existingTask.Priority;
+        if (isPriorityValid)
+        {
+            existingTask.Priority = task.Priority;
+        }
+
         existingTask.Updated_At = DateTime.UtcNow;
 
 
