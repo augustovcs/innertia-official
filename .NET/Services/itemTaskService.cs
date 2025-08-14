@@ -14,6 +14,7 @@ using Supabase.Gotrue;
 using Task.DTO;
 using Task.Interfaces;
 using Task.Models;
+using Classes.Special;
 
 
 
@@ -138,6 +139,12 @@ public class ItemTaskService : ITaskItem
 
         }
 
+        UpdateHelper.UpdateValidProperties(task, existingTask);
+
+
+
+        /*
+
         bool isTitleValid = !string.IsNullOrWhiteSpace(task.Title) && task.Title != "string" && task.Title != existingTask.Title;
         if (isTitleValid)
         {
@@ -161,6 +168,10 @@ public class ItemTaskService : ITaskItem
         {
             existingTask.Priority = task.Priority;
         }
+
+
+        */
+
 
         existingTask.Updated_At = DateTime.UtcNow;
 
