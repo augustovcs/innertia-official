@@ -145,6 +145,9 @@ public class ItemTaskService : ITaskItem
 
         /*
 
+        THIS IS A OLD METHOD THAT WAS USING INSTEAD THE CLASS AND METHOD ABOVE (UPDATEHELPER)!
+        PLEASE DON'T USE IT, IT WILL WORK BUT... IT'S PRETTIER USING THE UPDATEHELPER :)
+
         bool isTitleValid = !string.IsNullOrWhiteSpace(task.Title) && task.Title != "string" && task.Title != existingTask.Title;
         if (isTitleValid)
         {
