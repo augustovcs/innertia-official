@@ -14,6 +14,6 @@ namespace Auth.Interfaces;
 public interface IAuthService
 {
 
-    Task<AuthCredentials> LoginUser(LoginUserDTO credentials);
+    Task<AuthCredentials> LoginUser(LoginUserFullDTO credentials);
 
 }

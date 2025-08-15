@@ -71,8 +71,8 @@ public class EditService : IEditService
     if (!isEmailValid && !isPasswordValid)
         throw new ValidationException("Neither email nor password will be changed. Nothing was updated.");
 
-    if (isEmailValid)
-        credentialPost.Email_Id = credentials.Email;
+        if (isEmailValid)
+            credentialPost.Email_Id = credentials.Email;
 
     if (isPasswordValid)
         credentialPost.Password_Id = BCrypt.Net.BCrypt.HashPassword(credentials.Password);
