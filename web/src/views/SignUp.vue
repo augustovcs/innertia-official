@@ -7,9 +7,9 @@ import Label from '@/components/ui/Label.vue';
 import Toaster from '@/components/ui/Toaster.vue';
 import { useToast } from '@/composables/useToast';
 import {
-  signUp,
-  signUpSchema,
-  type TSignUpSchema,
+	signUp,
+	signUpSchema,
+	type TSignUpSchema,
 } from '@/services/auth/signUp';
 import { AxiosError, HttpStatusCode } from 'axios';
 import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next';
@@ -91,13 +91,13 @@ const submit = async () => {
   const { email, password } = user;
 
   try {
-    const { data } = await signUp({ email, password_hash: password });
+    await signUp({ email, password_hash: password });
 
     loading.value = false;
 
-    // TODO: add session
-    console.log(data);
-    document.location.href = document.location.origin + '/dashboard';
+    toast.success('Tudo certo! Agora, faça o login');
+
+    document.location.href = document.location.origin + '/login';
   } catch (err) {
     loading.value = false;
 

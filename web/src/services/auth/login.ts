@@ -17,11 +17,15 @@ interface ILoginRequest {
 
 interface ILoginResponse {
   message: string;
-  email: string;
+	token: string;
+  user: {
+		id: string;
+		email: string;
+	};
 }
 
 export const login = (req: ILoginRequest) => {
-  const data = api.post<ILoginResponse>('auth/login-user', req);
+  const data = api.post<ILoginResponse>('/auth/login', req);
 
   return data;
 };

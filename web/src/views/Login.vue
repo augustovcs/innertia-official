@@ -6,9 +6,12 @@ import Label from '@/components/ui/Label.vue';
 import Toaster from '@/components/ui/Toaster.vue';
 import { useToast } from '@/composables/useToast';
 import { login, loginSchema, type TLoginSchema } from '@/services/auth/login';
+import { setCookie, useCookies } from '@/utils/cookies';
 import { AxiosError, HttpStatusCode } from 'axios';
 import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next';
 import { reactive, ref } from 'vue';
+
+useCookies();
 
 const toast = useToast();
 
@@ -68,10 +71,11 @@ const submit = async () => {
   try {
     const { data } = await login({ email, password });
 
+    const { token } = data;
+		setCookie("session_token", token);
+
     loading.value = false;
 
-    // TODO: add session
-    console.log(data);
     document.location.href = document.location.origin + '/dashboard';
   } catch (err) {
     loading.value = false;
