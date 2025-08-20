@@ -27,7 +27,7 @@ public class LoginUserController : ControllerBase
     {
         AuthCredentials loginSuccess = await _authTesting.LoginUser(user);
 
-         if (loginSuccess == null)
+        if (loginSuccess == null)
         {
             return BadRequest("Email or password incorrect. ");
         }
@@ -42,7 +42,13 @@ public class LoginUserController : ControllerBase
             message = "User logged successfully",
             token,
             user = new { loginSuccess.User_ID, loginSuccess.Email_Id },
-            
+
         });
+    }
+
+    [HttpPost("QualquerMerda")]
+    public bool QualquerMerda()
+    {
+        return true;
     }
 }

@@ -2,7 +2,7 @@ namespace Classes.Special;
 
 public static class UpdateHelper
 {
-    public static void UpdateValidProperties<TSource, TTarget>(TSource source, TTarget target)
+    public static void UpdateValidProperties<TTarget, TSource>( TTarget target, TSource source)
     {
         var properties = typeof(TSource).GetProperties();
         foreach (var prop in properties)

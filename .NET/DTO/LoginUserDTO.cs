@@ -18,7 +18,6 @@ public class LoginUserDTO
     public string Email { get; set; } = null!;
     [JsonPropertyName("password")]
     public string Password { get; set; } = null!;
-
 }
 
 
@@ -26,6 +25,9 @@ public class LoginUserFullDTO : LoginUserDTO
 {
     [JsonPropertyName("id")]
     public int Id { get; set; }
+
+    [JsonPropertyName("idade")]
+    public int Idade {  get; set; } 
 
 
     //[JsonPropertyName("role")]
