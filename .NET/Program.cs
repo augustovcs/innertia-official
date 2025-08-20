@@ -39,13 +39,9 @@ new Supabase.Client(
 		}
 ));
 
-/*
-LOGGING IF YOUR SUPABASE URL AND KEY ARE CORRECT
-This is useful for debugging purposes.
 
 Console.WriteLine("Supabase URL: " + builder.Configuration["SupabaseUrl"]);
 Console.WriteLine("Supabase KEY: " + builder.Configuration["SupabaseKey"]);
-*/
 
 builder.Services.AddControllers();
 

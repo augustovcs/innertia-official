@@ -139,7 +139,7 @@ public class ItemTaskService : ITaskItem
 
         }
 
-        UpdateHelper.UpdateValidProperties(task, existingTask);
+        UpdateHelper.UpdateValidProperties(existingTask, task);
 
 
 
