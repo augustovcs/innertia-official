@@ -21,7 +21,7 @@ interface ILoginResponse {
 }
 
 export const login = (req: ILoginRequest) => {
-  const data = api.post<ILoginResponse>('auth/login-user', req);
+  const data = api.post<ILoginResponse>('auth/login', req);
 
   return data;
 };
