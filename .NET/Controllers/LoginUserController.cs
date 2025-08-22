@@ -45,10 +45,4 @@ public class LoginUserController : ControllerBase
 
         });
     }
-
-    [HttpPost("QualquerMerda")]
-    public bool QualquerMerda()
-    {
-        return true;
-    }
 }
