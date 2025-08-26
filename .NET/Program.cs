@@ -6,11 +6,18 @@ using Task.Interfaces;
 using Task.Services;
 using Configs.JwtRules;
 using Microsoft.OpenApi.Models;
+using performancer.Views.Components;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
 var builder = WebApplication.CreateBuilder(args);
+
+//RAZOR 
+builder.Services.AddRazorComponents()
+	.AddInteractiveServerComponents();
+
+
 
 builder.Services.AddCors(options =>
 {
@@ -75,10 +82,21 @@ if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
-
-
+	
 }
 
+
+
 app.UseHttpsRedirection();
+
+
+app.UseAntiforgery();
+
+
+app.MapStaticAssets();
+app.MapRazorComponents<App>()
+	.AddInteractiveServerRenderMode();
+
+
 
 app.Run();
