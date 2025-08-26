@@ -47,8 +47,8 @@ new Supabase.Client(
 ));
 
 
-Console.WriteLine("Supabase URL: " + builder.Configuration["SupabaseUrl"]);
-Console.WriteLine("Supabase KEY: " + builder.Configuration["SupabaseKey"]);
+//Console.WriteLine("Supabase URL: " + builder.Configuration["SupabaseUrl"]);
+//Console.WriteLine("Supabase KEY: " + builder.Configuration["SupabaseKey"]);
 
 builder.Services.AddControllers();
 

@@ -177,14 +177,18 @@ public class ItemTaskService : ITaskItem
 
 
         existingTask.Updated_At = DateTime.UtcNow;
-
+        
+        
 
         var response = await _supabaseClient
         .From<TaskItem>()
         .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, id)
         .Update(existingTask);
 
-        return response.Models != null && response.Models.Any();
+
+        //retorna se nao for nulo
+        //retorna tudo que tiver
+        return response.Model != null && response.Models.Any();
 
     }
 
