@@ -1,6 +1,404 @@
 @page "/dashboard"
-<h3>dashboard</h3>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Gestão</title>
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="Dashboard.razor.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="header-title">Dashboard</h1>
+        </div>
+        
+        <div class="header-center">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Pesquisar...">
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <button class="header-btn">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </button>
+            <button class="header-btn">
+                <i class="fas fa-cog"></i>
+            </button>
+            <div class="user-profile">
+                <img src="/placeholder.svg?height=32&width=32" alt="Usuário">
+                <span>João Silva</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
 
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <span>Sistema</span>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-tasks"></i>
+                        <span>Projetos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Equipe</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-calendar"></i>
+                        <span>Calendário</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Relatórios</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Documentos</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="upgrade-card">
+                <i class="fas fa-crown"></i>
+                <h4>Upgrade Pro</h4>
+                <p>Desbloqueie recursos avançados</p>
+                <button class="btn btn-primary btn-sm">Upgrade</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon bg-blue">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>24</h3>
+                    <p>Tarefas Ativas</p>
+                    <span class="stat-change positive">+12%</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon bg-green">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>18</h3>
+                    <p>Concluídas</p>
+                    <span class="stat-change positive">+8%</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon bg-orange">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>6</h3>
+                    <p>Pendentes</p>
+                    <span class="stat-change negative">-3%</span>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon bg-purple">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>12</h3>
+                    <p>Membros</p>
+                    <span class="stat-change positive">+2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kanban Board -->
+        <div class="kanban-container">
+            <div class="kanban-header">
+                <h2>Quadro de Tarefas</h2>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Nova Tarefa
+                </button>
+            </div>
+            
+            <div class="kanban-board">
+                <!-- To Do Column -->
+                <div class="kanban-column">
+                    <div class="column-header">
+                        <h3>A Fazer</h3>
+                        <span class="task-count">4</span>
+                    </div>
+                    <div class="column-content">
+                        <div class="kanban-card">
+                            <div class="card-header">
+                                <span class="card-priority high">Alta</span>
+                                <button class="card-menu">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <h4>Implementar autenticação</h4>
+                            <p>Desenvolver sistema de login e registro de usuários</p>
+                            <div class="card-footer">
+                                <div class="card-assignees">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                </div>
+                                <span class="card-date">15 Dez</span>
+                            </div>
+                        </div>
+                        
+                        <div class="kanban-card">
+                            <div class="card-header">
+                                <span class="card-priority medium">Média</span>
+                                <button class="card-menu">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <h4>Design da homepage</h4>
+                            <p>Criar mockups e protótipos da página inicial</p>
+                            <div class="card-footer">
+                                <div class="card-assignees">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                </div>
+                                <span class="card-date">18 Dez</span>
+                            </div>
+                        </div>
+                        
+                        <div class="kanban-card">
+                            <div class="card-header">
+                                <span class="card-priority low">Baixa</span>
+                                <button class="card-menu">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <h4>Documentação API</h4>
+                            <p>Escrever documentação completa da API</p>
+                            <div class="card-footer">
+                                <div class="card-assignees">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                </div>
+                                <span class="card-date">20 Dez</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- In Progress Column -->
+                <div class="kanban-column">
+                    <div class="column-header">
+                        <h3>Em Progresso</h3>
+                        <span class="task-count">3</span>
+                    </div>
+                    <div class="column-content">
+                        <div class="kanban-card">
+                            <div class="card-header">
+                                <span class="card-priority high">Alta</span>
+                                <button class="card-menu">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <h4>Dashboard responsivo</h4>
+                            <p>Adaptar dashboard para dispositivos móveis</p>
+                            <div class="card-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                                <span>65%</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignees">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                </div>
+                                <span class="card-date">16 Dez</span>
+                            </div>
+                        </div>
+                        
+                        <div class="kanban-card">
+                            <div class="card-header">
+                                <span class="card-priority medium">Média</span>
+                                <button class="card-menu">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <h4>Integração banco de dados</h4>
+                            <p>Conectar aplicação com PostgreSQL</p>
+                            <div class="card-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 40%"></div>
+                                </div>
+                                <span>40%</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-assignees">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                </div>
+                                <span class="card-date">17 Dez</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Column -->
+                <div class="kanban-column">
+                    <div class="column-header">
+                        <h3>Em Revisão</h3>
+                        <span class="task-count">2</span>
+                    </div>
+                    <div class="column-content">
+                        <div class="kanban-card">
+                            <div class="card-header">
+                                <span class="card-priority medium">Média</span>
+                                <button class="card-menu">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <h4>Testes unitários</h4>
+                            <p>Implementar testes para módulos principais</p>
+                            <div class="card-footer">
+                                <div class="card-assignees">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                </div>
+                                <span class="card-date">14 Dez</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Done Column -->
+                <div class="kanban-column">
+                    <div class="column-header">
+                        <h3>Concluído</h3>
+                        <span class="task-count">5</span>
+                    </div>
+                    <div class="column-content">
+                        <div class="kanban-card completed">
+                            <div class="card-header">
+                                <span class="card-priority low">Baixa</span>
+                                <button class="card-menu">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <h4>Setup inicial do projeto</h4>
+                            <p>Configuração do ambiente de desenvolvimento</p>
+                            <div class="card-footer">
+                                <div class="card-assignees">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                </div>
+                                <span class="card-date">10 Dez</span>
+                            </div>
+                        </div>
+                        
+                        <div class="kanban-card completed">
+                            <div class="card-header">
+                                <span class="card-priority medium">Média</span>
+                                <button class="card-menu">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <h4>Estrutura do banco</h4>
+                            <p>Definir schema e relacionamentos</p>
+                            <div class="card-footer">
+                                <div class="card-assignees">
+                                    <img src="/placeholder.svg?height=24&width=24" alt="User">
+                                </div>
+                                <span class="card-date">12 Dez</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Toggle sidebar
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        });
+
+        // Simple drag and drop for kanban cards (basic implementation)
+        let draggedElement = null;
+
+        document.querySelectorAll('.kanban-card').forEach(card => {
+            card.draggable = true;
+            
+            card.addEventListener('dragstart', function(e) {
+                draggedElement = this;
+                this.style.opacity = '0.5';
+            });
+            
+            card.addEventListener('dragend', function(e) {
+                this.style.opacity = '';
+                draggedElement = null;
+            });
+        });
+
+        document.querySelectorAll('.column-content').forEach(column => {
+            column.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            });
+            
+            column.addEventListener('drop', function(e) {
+                e.preventDefault();
+                if (draggedElement) {
+                    this.appendChild(draggedElement);
+                    // Update task counts
+                    updateTaskCounts();
+                }
+            });
+        });
+
+        function updateTaskCounts() {
+            document.querySelectorAll('.kanban-column').forEach(column => {
+                const count = column.querySelectorAll('.kanban-card').length;
+                column.querySelector('.task-count').textContent = count;
+            });
+        }
+    </script>
+</body>
+</html>
 @code {
+    
     
 }
