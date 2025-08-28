@@ -29,8 +29,18 @@ public class ItemTaskService : ITaskItem
         _supabaseClient = supabaseClient;
     }
 
-    
 
+    public async Task<List<TaskItem>> GetTaskByStatus(int status)
+    {
+        var taskPost = await _supabaseClient
+            .From<TaskItem>()
+            .Where(t => t.Status == status)
+            .Get();
+
+        return taskPost.Models.ToList();
+
+    }
+    
 
     public async Task<List<TaskItemDTO>> GetAllTasks()
     {
