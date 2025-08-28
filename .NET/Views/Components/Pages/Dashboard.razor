@@ -1,3 +1,9 @@
+@inject ITaskItem TaskItemService
+@using Task.Interfaces
+@using Task.Models
+@using Task.Services 
+
+
 @page "/dashboard"
 <!DOCTYPE html>
 <html lang="en-US">
@@ -155,7 +161,12 @@
                 <div class="kanban-column">
                     <div class="column-header">
                         <h3>A Fazer</h3>
-                        <span class="task-count">4</span>
+                        <span class="task-count">@TasksToDo.Count()</span>
+                        <ul>
+                                @foreach( var task in TasksToDo) {
+                                <li>@task.Title </li>
+                            }
+                        </ul>
                     </div>
                     <div class="column-content">
                         <div class="kanban-card">
@@ -388,6 +399,11 @@
 </body>
 </html>
 @code {
-    
-    
+    private List<TaskItem> TasksToDo= new ();
+    protected override async Task OnInitializedAsync()
+    {
+        TasksToDo = await TaskItemService.GetTaskByStatus(0);
+    }
+
+
 }
