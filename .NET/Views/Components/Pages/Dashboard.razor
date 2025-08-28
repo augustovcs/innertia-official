@@ -1,10 +1,10 @@
 @page "/dashboard"
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Sistema de Gestão</title>
+    <title>Innertia - Your custom performance system</title>
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="Dashboard.razor.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
             <button class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
             </button>
-            <h1 class="header-title">Dashboard</h1>
+            <h1 class="header-title">My Dashboard</h1>
         </div>
         
         <div class="header-center">
@@ -35,7 +35,7 @@
                 <i class="fas fa-cog"></i>
             </button>
             <div class="user-profile">
-                <img src="/placeholder.svg?height=32&width=32" alt="Usuário">
+                <img src="/placeholder.svg?height=32&width=32">
                 <span>João Silva</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
@@ -47,51 +47,39 @@
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-cube"></i>
-                <span>Sistema</span>
+                <span>Innertia 0.1beta</span>
             </div>
         </div>
         
         <nav class="sidebar-nav">
             <ul class="nav-list">
                 <li class="nav-item active">
-                    <a href="#" class="nav-link">
+                    <a href="/dashboard" class="nav-link">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/annotations_v1" class="nav-link">
                         <i class="fas fa-tasks"></i>
-                        <span>Projetos</span>
+                        <span>Annotations</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/boards_v1" class="nav-link">
                         <i class="fas fa-users"></i>
-                        <span>Equipe</span>
+                        <span>Boards</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-calendar"></i>
-                        <span>Calendário</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/analytics_v1" class="nav-link">
                         <i class="fas fa-chart-bar"></i>
-                        <span>Relatórios</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-file-alt"></i>
-                        <span>Documentos</span>
+                        <span>Analytics</span>
                     </a>
                 </li>
             </ul>
         </nav>
-        
+    <!---
         <div class="sidebar-footer">
             <div class="upgrade-card">
                 <i class="fas fa-crown"></i>
@@ -100,6 +88,7 @@
                 <button class="btn btn-primary btn-sm">Upgrade</button>
             </div>
         </div>
+        --->
     </aside>
 
     <!-- Main Content -->
