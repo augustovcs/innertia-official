@@ -31,7 +31,5 @@ public class AuthCredentials : BaseModel
     [Column("updated_at")]
     public DateTime Last_Update { get; set; }
 
-
-
 }
 

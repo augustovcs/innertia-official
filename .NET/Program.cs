@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Task.Interfaces;
 using Task.Services;
 using Configs.JwtRules;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
@@ -25,6 +27,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddScoped<Supabase.Client>(_ =>
 new Supabase.Client(
 		builder.Configuration["SupabaseUrl"] ?? throw new ArgumentNullException("SupabaseUrl is not configured"),
@@ -36,13 +39,9 @@ new Supabase.Client(
 		}
 ));
 
-/*
-LOGGING IF YOUR SUPABASE URL AND KEY ARE CORRECT
-This is useful for debugging purposes.
 
 Console.WriteLine("Supabase URL: " + builder.Configuration["SupabaseUrl"]);
 Console.WriteLine("Supabase KEY: " + builder.Configuration["SupabaseKey"]);
-*/
 
 builder.Services.AddControllers();
 
@@ -62,6 +61,9 @@ var secretKey = builder.Configuration["Jwt:Key"];
 var app = builder.Build();
 
 app.UseCors(AllowSpecificOrigins);
+
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -73,6 +75,7 @@ if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
+
 
 }
 

@@ -27,21 +27,22 @@ public class LoginUserController : ControllerBase
     {
         AuthCredentials loginSuccess = await _authTesting.LoginUser(user);
 
-         if (loginSuccess == null)
+        if (loginSuccess == null)
         {
             return BadRequest("Email or password incorrect. ");
         }
 
         Console.WriteLine($"User logged: {user.Email}");
 
-        var token = _jwtTokenGenerator.GenerateToken(user.Id, user.Email);
+        var token = _jwtTokenGenerator.GenerateToken(loginSuccess.User_ID, user.Email);
 
 
         return Ok(new
         {
             message = "User logged successfully",
             token,
-            user = new { user.Id, user.Email},
+            user = new { loginSuccess.User_ID, loginSuccess.Email_Id },
+
         });
     }
 }
