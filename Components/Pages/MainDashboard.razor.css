@@ -1,3 +1,7 @@
+
 #test2 {
-    background:red;
+    background: red;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
 }

@@ -1,13 +1,32 @@
 @page "/dashboard"
 
-<PageTitle>Dashboard</PageTitle>
+<!-- Header -->
+<header class="header">
+    <div class="header-left">
+        <h1 class="page-title">Dashboard</h1>
+        <span class="page-subtitle">Visão geral dos projetos</span>
+    </div>
+    <div class="header-right">
+        <button class="btn btn-secondary">
+            <div class="btn-icon filter-icon"></div>
+            Filtros
+        </button>
+        <button class="btn btn-primary">
+            <div class="btn-icon add-icon"></div>
+            Nova Tarefa
+        </button>
+    </div>
+</header>
 
-<h1 id="test2">Hello, dashboard!</h1>
+<!-- Analytics Cards -->
+<section class="analytics-section">
+    <div class="analytics-grid">
+        <AnalyticsCard Value="24" Label="Total de Tarefas" Trend="+12%" TrendType="positive" IconClass="tasks-total-icon" />
+        <AnalyticsCard Value="8" Label="Em Progresso" Trend="0%" TrendType="neutral" IconClass="tasks-progress-icon" />
+        <AnalyticsCard Value="12" Label="Concluídas" Trend="+25%" TrendType="positive" IconClass="tasks-completed-icon" />
+        <AnalyticsCard Value="6" Label="Membros Ativos" Trend="+2" TrendType="positive" IconClass="team-members-icon" />
+    </div>
+</section>
 
-Welcome to your new app.
-
-@code {
-
-    
-
-}
+<!-- Kanban Board -->
+<KanbanBoard />
