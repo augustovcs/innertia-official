@@ -1,0 +1,225 @@
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout {
+    display: flex;
+    height: 100vh; 
+}
+
+.content {
+    flex: 1; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+/* Sidebar Buttons - Modernized */
+.btn {
+    display: flex;
+    margin-bottom: 1rem;
+    --main-color: #00A97F; 
+    --hover-color: #2b2d30; 
+    padding: 0.8em 1.75em;
+    background: #F5F5F5;
+    border-radius: 8px;
+    border: 2px solid var(--main-color);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    color: var(--main-color);
+    transition: all 0.4s ease;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #00A97F, #06B6D4, #3B82F6);
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 0;
+    transform: scale(1.2);
+    border-radius: 8px;
+}
+
+.btn:hover::after {
+    opacity: 0.2;
+    transform: scale(1);
+}
+
+.btn span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn:hover {
+    color: var(--hover-color);
+}
+
+.btn:active {
+    transform: scale(0.97);
+    filter: brightness(0.9);
+}
+
+
+/* Sidebar */
+.sidebar {
+    gap: 1rem;
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1E3A34 0%, #2C5F7A 100%); /* verde escuro para azul acinzentado */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* leve brilho */
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    color: #E0E0E0;
+    transition: all 0.3s ease-in-out;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Logo */
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #E0E0E0;
+    margin-bottom: 2rem;
+}
+
+/* Navigation links */
+.sidebar .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .nav-item {
+    margin-bottom: 1rem;
+}
+
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: #E0E0E0;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-item.active .nav-link {
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Icons */
+.sidebar .nav-link i {
+    font-size: 1.1rem;
+}
+
+/* Footer */
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: #C0C0C0;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+
+
+.top-row {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row ::deep a, .top-row ::deep .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        text-decoration: none;
+    }
+
+    .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .top-row ::deep a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row {
+        justify-content: space-between;
+    }
+
+    .top-row ::deep a, .top-row ::deep .btn-link {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row.auth ::deep a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row, article {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }

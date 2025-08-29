@@ -1,0 +1,68 @@
+﻿@inherits LayoutComponentBase
+
+<div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">Dashboard</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/dashboard" Match="NavLinkMatch.All">
+                        <div class="nav-icon dashboard-icon"></div>
+                        <span class="nav-text">Dashboard</span>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/projects">
+                        <div class="nav-icon projects-icon"></div>
+                        <span class="nav-text">Projetos</span>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/tasks">
+                        <div class="nav-icon tasks-icon"></div>
+                        <span class="nav-text">Tarefas</span>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/team">
+                        <div class="nav-icon team-icon"></div>
+                        <span class="nav-text">Equipe</span>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/reports">
+                        <div class="nav-icon reports-icon"></div>
+                        <span class="nav-text">Relatórios</span>
+                    </NavLink>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar"></div>
+                <div class="user-info">
+                    <span class="user-name">João Silva</span>
+                    <span class="user-role">Administrador</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        @Body
+    </main>
+</div>
