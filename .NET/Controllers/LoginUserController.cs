@@ -2,6 +2,9 @@ using Auth.DTO;
 using Auth.Interfaces;
 using Auth.Models;
 using Microsoft.AspNetCore.Mvc;
+using Configs.JwtRules;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Auth.Controllers;
 
@@ -10,28 +13,36 @@ namespace Auth.Controllers;
 public class LoginUserController : ControllerBase
 {
     private readonly IAuthService _authTesting;
+    private readonly JwtTokenGenerator _jwtTokenGenerator;
 
-    public LoginUserController(IAuthService authTesting)
+    public LoginUserController(IAuthService authTesting, JwtTokenGenerator jwtTokenGenerator)
     {
         _authTesting = authTesting;
+        _jwtTokenGenerator = jwtTokenGenerator;
+
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Authentication([FromBody] LoginUserDTO user)
+    public async Task<IActionResult> Authentication([FromBody] LoginUserFullDTO user)
     {
         AuthCredentials loginSuccess = await _authTesting.LoginUser(user);
 
-         if (loginSuccess == null)
+        if (loginSuccess == null)
         {
             return BadRequest("Email or password incorrect. ");
         }
 
         Console.WriteLine($"User logged: {user.Email}");
 
+        var token = _jwtTokenGenerator.GenerateToken(loginSuccess.User_ID, user.Email);
+
+
         return Ok(new
         {
             message = "User logged successfully",
-            email = user.Email
+            token,
+            user = new { loginSuccess.User_ID, loginSuccess.Email_Id },
+
         });
     }
 }

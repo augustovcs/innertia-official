@@ -5,6 +5,8 @@ Keep just the "using" as already injected for better memory economy and usage.
 For first time looking the project, keep maintain this arc model for Models.
 
 */
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using Microsoft.AspNetCore.SignalR;
 using Supabase.Postgrest.Attributes;

@@ -38,7 +38,7 @@ const validateFormField = (fieldName: keyof TLoginSchema) => {
 };
 
 const validateFormData = () => {
-  const {success, error, data} = loginSchema.safeParse(formData);
+  const { success, error, data } = loginSchema.safeParse(formData);
 
   Object.keys(formErrors).forEach(key => {
     formErrors[key as keyof TLoginSchema] = undefined;
@@ -55,44 +55,44 @@ const validateFormData = () => {
 };
 
 const submit = async () => {
-	loading.value = true;
+  loading.value = true;
   const user = validateFormData();
 
   if (!user) {
-		loading.value = false;
-		return;
-	}
+    loading.value = false;
+    return;
+  }
 
-	const { email, password } = user;
+  const { email, password } = user;
 
-	try {
-		const { data } = await login({ email, password });
+  try {
+    const { data } = await login({ email, password });
 
-		loading.value = false;
+    loading.value = false;
 
-		// TODO: add session
-		console.log(data);
-		document.location.href = document.location.origin + '/dashboard';
-	} catch (err) {
-		loading.value = false;
+    // TODO: add session
+    console.log(data);
+    document.location.href = document.location.origin + '/dashboard';
+  } catch (err) {
+    loading.value = false;
 
-		if (err instanceof AxiosError) {
-			const { status } = err;
+    if (err instanceof AxiosError) {
+      const { status } = err;
 
       if (!status) {
-				toast.error('Ops! Alguma deu errado')
-				return;
-			};
+        toast.error('Ops! Alguma deu errado');
+        return;
+      }
 
-      const clientErrors = [HttpStatusCode.BadRequest, HttpStatusCode.NotFound]
+      const clientErrors = [HttpStatusCode.BadRequest, HttpStatusCode.NotFound];
 
-			if (clientErrors.includes(status)) {
-				toast.error('Email ou senha incorretos')
-				return;
-			}
-		}
-		toast.error('Ops! Alguma deu errado')
-	}
+      if (clientErrors.includes(status)) {
+        toast.error('Email ou senha incorretos');
+        return;
+      }
+    }
+    toast.error('Ops! Alguma deu errado');
+  }
 };
 
 const imgUrl =
@@ -180,11 +180,16 @@ const imgUrl =
               </Input>
             </div>
           </div>
-          <Button type="submit" size="lg" :disabled="loading" class="flex justify-center items-center w-full h-12 disabled:opacity-50">
-						<LoaderCircle v-if="loading" class="animate-spin"/>
-						<p v-else>Entrar</p>
-					</Button>
-					<Toaster />
+          <Button
+            type="submit"
+            size="lg"
+            :disabled="loading"
+            class="flex justify-center items-center w-full h-12 disabled:opacity-50"
+          >
+            <LoaderCircle v-if="loading" class="animate-spin" />
+            <p v-else>Entrar</p>
+          </Button>
+          <Toaster />
         </form>
         <p class="mt-2 font-ibm-plex-sans text-sm xl:text-base">
           Não tem uma conta?

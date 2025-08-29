@@ -1,8 +1,12 @@
 using Auth.Interfaces;
 using Auth.Services;
 using Supabase;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Task.Interfaces;
 using Task.Services;
+using Configs.JwtRules;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
@@ -11,17 +15,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy(name: AllowSpecificOrigins,
-										 policy =>
-										 {
-											 policy.WithOrigins("http://localhost:5173")
-											 .AllowAnyHeader()
-											 .AllowAnyMethod();
-										 });
+	policy =>
+	{
+		policy.WithOrigins("http://localhost:5173")
+		.AllowAnyHeader()
+		.AllowAnyMethod();
+	});
 });
 
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddScoped<Supabase.Client>(_ =>
 new Supabase.Client(
@@ -34,13 +39,9 @@ new Supabase.Client(
 		}
 ));
 
-/*
-LOGGING IF YOUR SUPABASE URL AND KEY ARE CORRECT
-This is useful for debugging purposes.
 
 Console.WriteLine("Supabase URL: " + builder.Configuration["SupabaseUrl"]);
 Console.WriteLine("Supabase KEY: " + builder.Configuration["SupabaseKey"]);
-*/
 
 builder.Services.AddControllers();
 
@@ -50,12 +51,19 @@ builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<IEditService, EditService>();
 builder.Services.AddScoped<IAuthService, LoginUserService>();
 builder.Services.AddScoped<ITaskItem, ItemTaskService>();
+builder.Services.AddScoped<JwtTokenGenerator>();
+
+var secretKey = builder.Configuration["Jwt:Key"];
+
 
 // Add CORS policy
 
 var app = builder.Build();
 
 app.UseCors(AllowSpecificOrigins);
+
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -67,6 +75,7 @@ if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
+
 
 }
 

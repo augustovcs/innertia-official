@@ -7,7 +7,7 @@ export type DashboardPages =
   | '/tasks'
   | '/notes'
   | '/settings'
-	| 'logout';
+  | '/help-center';
 
 const prefix = '/dashboard';
 
