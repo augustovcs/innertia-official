@@ -29,7 +29,16 @@ public class TaskItemEditDTO
 public class TaskItemDTO : TaskItemEditDTO
 
 {
-
+    
+    public string StatusString => Status switch
+    {
+        0 => "Open",
+        1 => "InProgress",
+        2 => "Testing",
+        3 => "Close",
+        _ => "Open"
+    };    
+    
     public int User_ID { get; set; }
     public int Id { get; set; }
 

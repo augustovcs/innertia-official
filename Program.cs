@@ -74,7 +74,10 @@ builder.Services.AddRazorComponents()
 builder.WebHost.UseStaticWebAssets();
 
 //SYNCFUSION
-builder.Services.AddSyncfusionBlazor();
+builder.Services.AddSyncfusionBlazor(options =>
+{
+	options.EnableRippleEffect = true;
+});
 
 
 // Add CORS policy

@@ -1,8 +1,12 @@
 @page "/dashboard"
 @using Syncfusion.Blazor.Kanban
 @using Task.DTO
+@using Task.Interfaces
 @using Task.Models
+@using Task.Services
 @inject IJSRuntime JS
+@inject ITaskItem _taskService
+@inject Supabase.Client supabase
 
 
 <!-- Header -->
@@ -17,43 +21,32 @@
     </div>
 </header>
 
-    <SfKanban TValue="TasksModel" KeyField="Status" DataSource="Tasks">
-        <KanbanColumns>
-            <KanbanColumn HeaderText="To Do" KeyField="@(new List<string>() {"Open"})"></KanbanColumn>
-            <KanbanColumn HeaderText="In Progress" KeyField="@(new List<string>() {"InProgress"})"></KanbanColumn>
-            <KanbanColumn HeaderText="Testing" KeyField="@(new List<string>() {"Testing"})"></KanbanColumn>
-            <KanbanColumn HeaderText="Done" KeyField="@(new List<string>() {"Close"})"></KanbanColumn>
-        </KanbanColumns>
-        <KanbanCardSettings HeaderField="Title" ContentField="Summary"></KanbanCardSettings>
+<SfKanban TValue="TaskItemDTO" KeyField="StatusString" DataSource="TasksInfo" AllowKeyboard="true" AllowDragAndDrop="true">
+    <KanbanColumns>
+        <KanbanColumn HeaderText="To Do" KeyField="@(new List<string>() {"Open"})"></KanbanColumn>
+        <KanbanColumn HeaderText="Doing" KeyField="@(new List<string>() {"InProgress"})"></KanbanColumn>
+        <KanbanColumn HeaderText="Done" KeyField="@(new List<string>() {"Testing"})"></KanbanColumn>
+        <KanbanColumn HeaderText="Archived" KeyField="@(new List<string>() {"Close"})"></KanbanColumn>
+    </KanbanColumns>
+    <KanbanCardSettings  ShowHeader="true" HeaderField="Title" ContentField="Description"></KanbanCardSettings>
+</SfKanban>
 
-    </SfKanban>
+
 
 
 @code {
 
-    private List<TasksModel> Tasks = new List<TasksModel>()
-    {
-        new TasksModel { Id = "1", 
-            Title = "Tarefa 1", 
-            Status = "Open", 
-            Summary = "Resumo da tarefa 1",
-            Assignee = "Homem teste",
-            CardTags = new List<string>() {"Analyze", "Costumer"},
-            Color = "#8b447a"
-        },
-            
-        new TasksModel { Id = "2", Title = "Tarefa 2", Status = "Open", Summary = "Resumo da tarefa 2" }
-    };
 
-    public class TasksModel
+    public List<TaskItemDTO> TasksInfo { get; set; } = new List<TaskItemDTO>();
+
+    protected override async Task OnInitializedAsync()
     {
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public string Status { get; set; }
-        public string Summary { get; set; }
-        public string Assignee { get; set; }
-        public string Color { get; set; }
-        public List<string> CardTags { get; set; }
+
+        var tasks = await _taskService.GetAllTasks();
+        Console.WriteLine($"TASKS HERE: {tasks.Count}");
+        TasksInfo = tasks;
+
+
     }
 
 }

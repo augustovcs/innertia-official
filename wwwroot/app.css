@@ -528,8 +528,8 @@ body {
 
 /* ===== CONTEÚDO PRINCIPAL ===== */
 .main-content {
-    flex: 1;
-    margin-left: var(--sidebar-width);
+    flex: 2;
+    margin-left: var(--spacing-md);
     transition: margin-left var(--transition-speed) ease;
     display: flex;
     flex-direction: column;
