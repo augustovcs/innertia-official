@@ -1,4 +1,9 @@
 @page "/dashboard"
+@using Syncfusion.Blazor.Kanban
+@using Task.DTO
+@using Task.Models
+@inject IJSRuntime JS
+
 
 <!-- Header -->
 <header class="header">
@@ -7,26 +12,48 @@
         <span class="page-subtitle">Visão geral dos projetos</span>
     </div>
     <div class="header-right">
-        <button class="btn btn-secondary">
-            <div class="btn-icon filter-icon"></div>
-            Filtros
-        </button>
-        <button class="btn btn-primary">
-            <div class="btn-icon add-icon"></div>
-            Nova Tarefa
-        </button>
+        <button class="btn btn-secondary">Filtros</button>
+        <button class="btn btn-primary">Nova Tarefa</button>
     </div>
 </header>
 
-<!-- Analytics Cards -->
-<section class="analytics-section">
-    <div class="analytics-grid">
-        <AnalyticsCard Value="24" Label="Total de Tarefas" Trend="+12%" TrendType="positive" IconClass="tasks-total-icon" />
-        <AnalyticsCard Value="8" Label="Em Progresso" Trend="0%" TrendType="neutral" IconClass="tasks-progress-icon" />
-        <AnalyticsCard Value="12" Label="Concluídas" Trend="+25%" TrendType="positive" IconClass="tasks-completed-icon" />
-        <AnalyticsCard Value="6" Label="Membros Ativos" Trend="+2" TrendType="positive" IconClass="team-members-icon" />
-    </div>
-</section>
+    <SfKanban TValue="TasksModel" KeyField="Status" DataSource="Tasks">
+        <KanbanColumns>
+            <KanbanColumn HeaderText="To Do" KeyField="@(new List<string>() {"Open"})"></KanbanColumn>
+            <KanbanColumn HeaderText="In Progress" KeyField="@(new List<string>() {"InProgress"})"></KanbanColumn>
+            <KanbanColumn HeaderText="Testing" KeyField="@(new List<string>() {"Testing"})"></KanbanColumn>
+            <KanbanColumn HeaderText="Done" KeyField="@(new List<string>() {"Close"})"></KanbanColumn>
+        </KanbanColumns>
+        <KanbanCardSettings HeaderField="Title" ContentField="Summary"></KanbanCardSettings>
 
-<!-- Kanban Board -->
-<KanbanBoard />
+    </SfKanban>
+
+
+@code {
+
+    private List<TasksModel> Tasks = new List<TasksModel>()
+    {
+        new TasksModel { Id = "1", 
+            Title = "Tarefa 1", 
+            Status = "Open", 
+            Summary = "Resumo da tarefa 1",
+            Assignee = "Homem teste",
+            CardTags = new List<string>() {"Analyze", "Costumer"},
+            Color = "#8b447a"
+        },
+            
+        new TasksModel { Id = "2", Title = "Tarefa 2", Status = "Open", Summary = "Resumo da tarefa 2" }
+    };
+
+    public class TasksModel
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string Status { get; set; }
+        public string Summary { get; set; }
+        public string Assignee { get; set; }
+        public string Color { get; set; }
+        public List<string> CardTags { get; set; }
+    }
+
+}

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.OpenApi.Models;
 using innertia_testing_section.Components;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Syncfusion.Blazor;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
@@ -72,21 +73,15 @@ builder.Services.AddRazorComponents()
 
 builder.WebHost.UseStaticWebAssets();
 
+//SYNCFUSION
+builder.Services.AddSyncfusionBlazor();
 
-//RAZOR 
-builder.Services.AddRazorComponents()
-	.AddInteractiveServerComponents();
-
-builder.WebHost.UseStaticWebAssets();
 
 // Add CORS policy
-
-
 
 var app = builder.Build();
 
 app.UseCors(AllowSpecificOrigins);
-
 
 
 app.UseAuthentication();
