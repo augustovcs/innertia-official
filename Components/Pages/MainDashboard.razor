@@ -1,4 +1,13 @@
 @page "/dashboard"
+@using Syncfusion.Blazor.Kanban
+@using Task.DTO
+@using Task.Interfaces
+@using Task.Models
+@using Task.Services
+@inject IJSRuntime JS
+@inject ITaskItem _taskService
+@inject Supabase.Client supabase
+
 
 <!-- Header -->
 <header class="header">
@@ -7,26 +16,37 @@
         <span class="page-subtitle">Visão geral dos projetos</span>
     </div>
     <div class="header-right">
-        <button class="btn btn-secondary">
-            <div class="btn-icon filter-icon"></div>
-            Filtros
-        </button>
-        <button class="btn btn-primary">
-            <div class="btn-icon add-icon"></div>
-            Nova Tarefa
-        </button>
+        <button class="btn btn-secondary">Filtros</button>
+        <button class="btn btn-primary">Nova Tarefa</button>
     </div>
 </header>
 
-<!-- Analytics Cards -->
-<section class="analytics-section">
-    <div class="analytics-grid">
-        <AnalyticsCard Value="24" Label="Total de Tarefas" Trend="+12%" TrendType="positive" IconClass="tasks-total-icon" />
-        <AnalyticsCard Value="8" Label="Em Progresso" Trend="0%" TrendType="neutral" IconClass="tasks-progress-icon" />
-        <AnalyticsCard Value="12" Label="Concluídas" Trend="+25%" TrendType="positive" IconClass="tasks-completed-icon" />
-        <AnalyticsCard Value="6" Label="Membros Ativos" Trend="+2" TrendType="positive" IconClass="team-members-icon" />
-    </div>
-</section>
+<SfKanban TValue="TaskItemDTO" KeyField="StatusString" DataSource="TasksInfo" AllowKeyboard="true" AllowDragAndDrop="true">
+    <KanbanColumns>
+        <KanbanColumn HeaderText="To Do" KeyField="@(new List<string>() {"Open"})"></KanbanColumn>
+        <KanbanColumn HeaderText="Doing" KeyField="@(new List<string>() {"InProgress"})"></KanbanColumn>
+        <KanbanColumn HeaderText="Done" KeyField="@(new List<string>() {"Testing"})"></KanbanColumn>
+        <KanbanColumn HeaderText="Archived" KeyField="@(new List<string>() {"Close"})"></KanbanColumn>
+    </KanbanColumns>
+    <KanbanCardSettings  ShowHeader="true" HeaderField="Title" ContentField="Description"></KanbanCardSettings>
+</SfKanban>
 
-<!-- Kanban Board -->
-<KanbanBoard />
+
+
+
+@code {
+
+
+    public List<TaskItemDTO> TasksInfo { get; set; } = new List<TaskItemDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var tasks = await _taskService.GetAllTasks();
+        Console.WriteLine($"TASKS HERE: {tasks.Count}");
+        TasksInfo = tasks;
+
+
+    }
+
+}
