@@ -30,14 +30,22 @@ public class ItemTaskService : ITaskItem
     }
 
 
-    public async Task<List<TaskItem>> GetTaskByStatus(int status)
+    public async Task<List<TaskItemDTO>> GetTaskByStatus(int status)
     {
         var taskPost = await _supabaseClient
             .From<TaskItem>()
             .Where(t => t.Status == status)
             .Get();
 
-        return taskPost.Models.ToList();
+        return taskPost.Models.Select(c => new TaskItemDTO()
+        {
+            Id = c.Task_ID,
+            User_ID = c.User_ID,
+            Title = c.Title,
+            Description = c.Description,
+            Priority = c.Priority,
+            Created_At = c.Created_At
+        }).ToList();
 
     }
     

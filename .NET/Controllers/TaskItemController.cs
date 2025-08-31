@@ -27,8 +27,17 @@ public class TaskItemController : ControllerBase
 
     }
 
-    //This is a endpoint to register a user based with cryptography 13rd level
-    //It is not meant for production use, but for testing purposes only.
+
+    [HttpPatch("get-all-by-status-{status}")]
+    public async Task<IActionResult> GetAll_Status(int status)
+    {
+        var task_post = await _taskService.GetTaskByStatus(status);
+
+        return Ok(task_post);
+
+
+    }
+
 
     [HttpPost("add/task")]
     public async Task<IActionResult> AddTaskItem([FromBody] TaskItemDTO task)
