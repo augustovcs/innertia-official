@@ -5,17 +5,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Task.Interfaces;
 using Task.Services;
 using Configs.JwtRules;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.OpenApi.Models;
-using performancer.Views.Components;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
 var builder = WebApplication.CreateBuilder(args);
-
-//RAZOR 
-builder.Services.AddRazorComponents()
-	.AddInteractiveServerComponents();
 
 
 
@@ -46,6 +42,12 @@ new Supabase.Client(
 		}
 ));
 
+if (builder.Environment.IsEnvironment("Local"))
+{
+	StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
+
+}
+
 
 //Console.WriteLine("Supabase URL: " + builder.Configuration["SupabaseUrl"]);
 //Console.WriteLine("Supabase KEY: " + builder.Configuration["SupabaseKey"]);
@@ -63,7 +65,22 @@ builder.Services.AddScoped<JwtTokenGenerator>();
 var secretKey = builder.Configuration["Jwt:Key"];
 
 
+//RAZOR 
+builder.Services.AddRazorComponents()
+	.AddInteractiveServerComponents();
+
+builder.WebHost.UseStaticWebAssets();
+
+
+//RAZOR 
+builder.Services.AddRazorComponents()
+	.AddInteractiveServerComponents();
+
+builder.WebHost.UseStaticWebAssets();
+
 // Add CORS policy
+
+
 
 var app = builder.Build();
 
@@ -94,8 +111,6 @@ app.UseAntiforgery();
 
 
 app.MapStaticAssets();
-app.MapRazorComponents<App>()
-	.AddInteractiveServerRenderMode();
 
 
 
