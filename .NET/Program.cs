@@ -1,3 +1,4 @@
+using Analytics.Interfaces;
 using Auth.Interfaces;
 using Auth.Services;
 using Supabase;
@@ -52,6 +53,7 @@ builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<IEditService, EditService>();
 builder.Services.AddScoped<IAuthService, LoginUserService>();
 builder.Services.AddScoped<ITaskItem, ItemTaskService>();
+builder.Services.AddScoped<IAnalyticsKanban, analyticsKanbanService>();
 builder.Services.AddScoped<JwtTokenGenerator>();
 
 var secretKey = builder.Configuration["Jwt:Key"];
