@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-export function LoginForm({
+
+export function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -14,12 +15,21 @@ export function LoginForm({
           <form className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-2xl font-bold">Welcome back</h1>
+                <h1 className="text-2xl font-bold">Welcome</h1>
                 <p className="text-muted-foreground text-balance">
-                  Login to your account
+                  Sign up to create your account
                 </p>
               </div>
-              <div className="grid gap-3">
+              <div className="grid gap-1">
+                <Label htmlFor="email">Full name</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  required
+                />
+              </div>
+              <div className="grid gap-1">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -28,14 +38,20 @@ export function LoginForm({
                   required
                 />
               </div>
-              <div className="grid gap-3">
+              <div className="grid gap-1">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
                 <Input id="password" type="password" required />
               </div>
+              <div className="grid gap-1">
+                <div className="flex items-center">
+                  <Label htmlFor="password">confirm password</Label>
+                </div>
+                <Input id="password" type="password" required />
+              </div>
               <Button type="submit" className="w-full">
-                Login
+                Sign up
               </Button>
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
@@ -72,9 +88,9 @@ export function LoginForm({
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <a href="/SignUp" className="underline underline-offset-4">
-                  Sign up
+                already have an account?{" "}
+                <a href="/" className="underline underline-offset-4">
+                  Sign in
                 </a>
               </div>
             </div>
@@ -83,7 +99,7 @@ export function LoginForm({
             <img
               src="/img.png"
               alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              className="absolute inset-0 h-full w-screen object-cover dark:brightness-[0.2] dark:grayscale"
             />
           </div>
         </CardContent>
