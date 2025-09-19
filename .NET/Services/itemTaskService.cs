@@ -29,8 +29,26 @@ public class ItemTaskService : ITaskItem
         _supabaseClient = supabaseClient;
     }
 
-    
 
+    public async Task<List<TaskItemDTO>> GetTaskByStatus(int status)
+    {
+        var taskPost = await _supabaseClient
+            .From<TaskItem>()
+            .Where(t => t.Status == status)
+            .Get();
+
+        return taskPost.Models.Select(c => new TaskItemDTO()
+        {
+            Id = c.Task_ID,
+            User_ID = c.User_ID,
+            Title = c.Title,
+            Description = c.Description,
+            Priority = c.Priority,
+            Created_At = c.Created_At
+        }).ToList();
+
+    }
+    
 
     public async Task<List<TaskItemDTO>> GetAllTasks()
     {
@@ -177,14 +195,18 @@ public class ItemTaskService : ITaskItem
 
 
         existingTask.Updated_At = DateTime.UtcNow;
-
+        
+        
 
         var response = await _supabaseClient
         .From<TaskItem>()
         .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, id)
         .Update(existingTask);
 
-        return response.Models != null && response.Models.Any();
+
+        //retorna se nao for nulo
+        //retorna tudo que tiver
+        return response.Model != null && response.Models.Any();
 
     }
 

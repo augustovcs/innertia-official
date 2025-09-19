@@ -46,7 +46,7 @@ interface ISignUpResponse {
 }
 
 export const signUp = (req: ISignUpRequest) => {
-  const data = api.post<ISignUpResponse>('auth/register-user-auth', req);
+  const data = api.post<ISignUpResponse>('auth/register', req);
 
   return data;
 };

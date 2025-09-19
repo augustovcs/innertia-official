@@ -15,6 +15,7 @@ namespace Task.Interfaces;
 public interface ITaskItem
 {
     Task<List<TaskItemDTO>> GetAllTasks();
+    Task<List<TaskItemDTO>> GetTaskByStatus(int status);
 
     Task<bool> AddTask(TaskItemDTO task);
     Task<bool> RemoveTask(TaskItemDTO task);

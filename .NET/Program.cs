@@ -1,16 +1,16 @@
+using Analytics.Interfaces;
 using Auth.Interfaces;
 using Auth.Services;
 using Supabase;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Task.Interfaces;
 using Task.Services;
 using Configs.JwtRules;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 var AllowSpecificOrigins = "innertiaWeb";
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 builder.Services.AddCors(options =>
 {
@@ -40,8 +40,10 @@ new Supabase.Client(
 ));
 
 
-Console.WriteLine("Supabase URL: " + builder.Configuration["SupabaseUrl"]);
-Console.WriteLine("Supabase KEY: " + builder.Configuration["SupabaseKey"]);
+
+
+//Console.WriteLine("Supabase URL: " + builder.Configuration["SupabaseUrl"]);
+//Console.WriteLine("Supabase KEY: " + builder.Configuration["SupabaseKey"]);
 
 builder.Services.AddControllers();
 
@@ -51,14 +53,16 @@ builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<IEditService, EditService>();
 builder.Services.AddScoped<IAuthService, LoginUserService>();
 builder.Services.AddScoped<ITaskItem, ItemTaskService>();
+builder.Services.AddScoped<IAnalyticsKanban, analyticsKanbanService>();
 builder.Services.AddScoped<JwtTokenGenerator>();
 
 var secretKey = builder.Configuration["Jwt:Key"];
 
 
+var app = builder.Build();
+
 // Add CORS policy
 
-var app = builder.Build();
 
 app.UseCors(AllowSpecificOrigins);
 
@@ -75,10 +79,18 @@ if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
-
-
+	
 }
 
+
+
 app.UseHttpsRedirection();
+
+
+
+
+app.MapStaticAssets();
+
+
 
 app.Run();
